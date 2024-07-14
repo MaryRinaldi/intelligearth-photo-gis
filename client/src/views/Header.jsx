@@ -1,4 +1,3 @@
-// Header.jsx
 import React from 'react';
 import SocialMediaIcon from '../assets/Social-Media-People-Doodles.jpg';
 import LogoIcon from '../assets/Logo.png';
