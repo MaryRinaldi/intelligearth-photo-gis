@@ -5,11 +5,12 @@ const PhotoUploadForm = ({ onPhotoUpload }) => {
   const [description, setDescription] = useState('');
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
-  const [photoFile, setPhotoFile] = useState(null);
+  const [photoId, setPhotoId] = useState(null);
+  const [url, setUrl] = useState('');
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    setPhotoFile(file);
+    setPhotoId(file);
   };
 
   const handleSubmit = async (e) => {
@@ -17,11 +18,12 @@ const PhotoUploadForm = ({ onPhotoUpload }) => {
 
     try {
       const formData = new FormData();
-      formData.append('photo', photoFile);
+      formData.append('photo', photoId);
       formData.append('title', title);
       formData.append('description', description);
       formData.append('latitude', latitude);
       formData.append('longitude', longitude);
+      formData.append('url', url);
 
       const response = await fetch('http://localhost:5000/api/upload', {
         method: 'POST',
@@ -40,7 +42,8 @@ const PhotoUploadForm = ({ onPhotoUpload }) => {
       setDescription('');
       setLatitude('');
       setLongitude('');
-      setPhotoFile(null);
+      setPhotoId('');
+      setUrl('');
     } catch (error) {
       console.error('Error uploading photo:', error);
     }
@@ -70,7 +73,8 @@ const PhotoUploadForm = ({ onPhotoUpload }) => {
               <input type="text" id="longitude" value={longitude} onChange={(e) => setLongitude(e.target.value)} />
               <button type="submit" className="upload-button">Upload</button>
             </form>
-            <p className="drag-info">or drag and drop your photo here</p>
+            <label htmlFor="drag-info">Or insert your URL here:</label>
+            <input type="text" id="drag-info" value={longitude} onChange={(e) => setUrl(e.target.value)} />
           </div>
         </div>
       </div>
