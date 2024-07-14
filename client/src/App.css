@@ -45,8 +45,8 @@ body {
 }
 
 .header .logo .logo-icon {
-  width: 34px;
-  height: 34px;
+  width: 54px;
+  height: 54px;
   fill: var(--color-primary);
 }
 
@@ -60,6 +60,7 @@ body {
 .header .nav-links {
   display: flex;
   gap: 20px;
+  align-items: center;
 }
 
 .header .nav-links .nav-link {

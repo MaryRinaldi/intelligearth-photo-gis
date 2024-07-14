@@ -5,12 +5,14 @@ const PhotoUploadForm = ({ onPhotoUpload }) => {
   const [description, setDescription] = useState('');
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
-  const [photoId, setPhotoId] = useState(null);
+  const [photos, setPhotos] = useState([]);
   const [url, setUrl] = useState('');
+  const [photoIdCounter, setPhotoIdCounter] = useState(1); // Contatore per gli ID delle foto
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    setPhotoId(file);
+    setPhotos([...photos, { id: photoIdCounter, file }]);
+    setPhotoIdCounter(photoIdCounter + 1); // Incrementa il contatore degli ID delle foto
   };
 
   const handleSubmit = async (e) => {
@@ -18,7 +20,7 @@ const PhotoUploadForm = ({ onPhotoUpload }) => {
 
     try {
       const formData = new FormData();
-      formData.append('photo', photoId);
+      formData.append('photo', photos[photos.length - 1].file); // Utilizza l'ultimo file aggiunto
       formData.append('title', title);
       formData.append('description', description);
       formData.append('latitude', latitude);
@@ -42,7 +44,6 @@ const PhotoUploadForm = ({ onPhotoUpload }) => {
       setDescription('');
       setLatitude('');
       setLongitude('');
-      setPhotoId('');
       setUrl('');
     } catch (error) {
       console.error('Error uploading photo:', error);
@@ -50,33 +51,31 @@ const PhotoUploadForm = ({ onPhotoUpload }) => {
   };
 
   return (
-
-        <div className="upload-section">
-          <div className="upload-buttons">
-            <div className="upload-icon">
-              <svg viewBox="0 0 22 24" xmlns="http://www.w3.org/2000/svg" fill="#49779c" width="39px" height="45px">
-                <path d="M12 6.5h-1.5v4h-4v1.5h4v4h1.5v-4h4v-1.5h-4v-4z"/>
-              </svg>
-            </div>
-            <h3 className="upload-title">Upload a Photo</h3>
-            <p className="upload-info">PNG, JPG, JPEG any size</p>
-            <form onSubmit={handleSubmit} className='upload-form'>
-              <input type="file" onChange={handleFileChange} />
-              <label htmlFor="title">Title:</label>
-              <input type="text" id="title" value={title} onChange={(e) => setTitle(e.target.value)} />
-              <label htmlFor="description">Description:</label>
-              <textarea id="description" value={description} onChange={(e) => setDescription(e.target.value)} />
-              <label htmlFor="latitude">Latitude:</label>
-              <input type="text" id="latitude" value={latitude} onChange={(e) => setLatitude(e.target.value)} />
-              <label htmlFor="longitude">Longitude:</label>
-              <input type="text" id="longitude" value={longitude} onChange={(e) => setLongitude(e.target.value)} />
-              <button type="submit" className="upload-button">Upload</button>
-            </form>
-            <label htmlFor="drag-info">Or insert your URL here:</label>
-            <input type="text" id="drag-info" value={longitude} onChange={(e) => setUrl(e.target.value)} />
-          </div>
+    <div className="upload-section">
+      <div className="upload-buttons">
+        <div className="upload-icon">
+          <svg viewBox="0 0 22 24" xmlns="http://www.w3.org/2000/svg" fill="#49779c" width="39px" height="45px">
+            <path d="M12 6.5h-1.5v4h-4v1.5h4v4h1.5v-4h4v-1.5h-4v-4z"/>
+          </svg>
         </div>
-
+        <h3 className="upload-title">Upload a Photo</h3>
+        <p className="upload-info">PNG, JPG, JPEG any size</p>
+        <form onSubmit={handleSubmit} className="upload-form">
+          <input type="file" onChange={handleFileChange} />
+          <label htmlFor="title">Title:</label>
+          <input type="text" id="title" value={title} onChange={(e) => setTitle(e.target.value)} />
+          <label htmlFor="description">Description:</label>
+          <textarea id="description" value={description} onChange={(e) => setDescription(e.target.value)} />
+          <label htmlFor="latitude">Latitude:</label>
+          <input type="text" id="latitude" value={latitude} onChange={(e) => setLatitude(e.target.value)} />
+          <label htmlFor="longitude">Longitude:</label>
+          <input type="text" id="longitude" value={longitude} onChange={(e) => setLongitude(e.target.value)} />
+          <button type="submit" className="upload-button">Upload</button>
+        </form>
+        <label htmlFor="url">Or insert your URL here:</label>
+        <input type="text" id="url" value={url} onChange={(e) => setUrl(e.target.value)} />
+      </div>
+    </div>
   );
 };
 
