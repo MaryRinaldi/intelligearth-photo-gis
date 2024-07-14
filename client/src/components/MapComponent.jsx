@@ -44,10 +44,8 @@ function MapComponent({ photos }) {
   const handleMapClick = (e) => {
     const { lng, lat } = e.lngLat;
 
-    // Log latitude and longitude to the console
     console.log(`Latitude: ${lat}, Longitude: ${lng}`);
 
-    // Create a new marker element
     const markerEl = document.createElement('div');
     markerEl.className = 'marker';
     markerEl.style.backgroundImage = 'url(https://media.istockphoto.com/id/1397597374/it/foto/roma-al-tramonto.webp?b=1&s=170667a&w=0&k=20&c=jy49eiUjC0g_Px-4w96xz-R_0Hh5-841EAR1_LkUnL0=)';
@@ -60,7 +58,6 @@ function MapComponent({ photos }) {
       .setLngLat([lng, lat])
       .addTo(mapRef.current);
 
-    // Prepare data to be sent to the server
     const photoData = {
       title: 'Photo Title',
       description: 'Photo Description',
@@ -69,29 +66,24 @@ function MapComponent({ photos }) {
       url: 'https://media.istockphoto.com/id/1397597374/it/foto/roma-al-tramonto.webp?b=1&s=170667a&w=0&k=20&c=jy49eiUjC0g_Px-4w96xz-R_0Hh5-841EAR1_LkUnL0='
     };
 
-    // Log the data
     console.log('Photo data to be sent to the server:', photoData);
-
-    // Send data to the server (uncomment this part when your server is ready)
-    // fetch('/api/save-pic', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify(photoData)
-    // })
-    // .then(response => response.json())
-    // .then(data => console.log('Success:', data))
-    // .catch((error) => console.error('Error:', error));
+    fetch('/api/save-pic', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(photoData)
+    })
+    .then(response => response.json())
+    .then(data => console.log('Success:', data))
+    .catch((error) => console.error('Error:', error));
   };
 
   const addMarkersToMap = () => {
     if (!mapRef.current || !photos) return;
 
-    // Clear existing markers
     document.querySelectorAll('.marker').forEach(marker => marker.remove());
 
-    // Add new markers
     photos.forEach(photo => {
       const el = document.createElement('div');
       el.className = 'marker';
@@ -102,7 +94,6 @@ function MapComponent({ photos }) {
       el.style.borderRadius = '6px';
       el.style.border = '2px solid white';
 
-      // Check if the image loads correctly
       const image = new Image();
       image.src = photo.url;
       image.onload = () => {
