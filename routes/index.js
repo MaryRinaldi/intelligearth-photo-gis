@@ -2,6 +2,9 @@ var express = require('express');
 var router = express.Router();
 var db = require("../model/helper");
 require("dotenv").config();
+const cors = require('cors');
+var app = express();
+app.use(cors());
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -9,7 +12,7 @@ router.get('/', function(req, res, next) {
 });
 
 /* POST request for saving data */
-router.post('/photos', function(req, res, next) {
+router.post('/photo_gis', function(req, res, next) {
   const { title, description, latitude, longitude } = req.body;
   if (!title || !description || !latitude || !longitude) {
     return res.status(400).json({ error: "Values must be completed." });
@@ -35,7 +38,7 @@ db.beginTransaction()
 });
 
 /* GET all photos from database */
-router.get('/photos', function(req, res, next) {
+router.get('/photos_gis', function(req, res, next) {
   const query = 'SELECT * FROM pic_table';
   db(query)
     .then(result => res.json(result))
