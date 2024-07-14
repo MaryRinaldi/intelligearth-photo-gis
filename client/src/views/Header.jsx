@@ -3,7 +3,6 @@ import React from 'react';
 import SocialMediaIcon from '../assets/Social-Media-People-Doodles.jpg';
 import LogoIcon from '../assets/Logo.png';
 import PhotoUploadForm from '../components/PhotoUploadForm';
-import SearchBar from '../views/Searchbar';
 
 const Header = ({ onPhotoUpload }) => (
   <header className="header">
@@ -23,7 +22,6 @@ const Header = ({ onPhotoUpload }) => (
       </div>
     </div>
     <PhotoUploadForm onPhotoUpload={onPhotoUpload} />
-    <SearchBar />
   </header>
 );
 
