@@ -8,28 +8,31 @@ app.use(cors());
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.send( { title: 'Express' });
+  res.send({ title: 'Express' });
 });
 
 /* POST request for saving data */
-router.post('/photo_gis', function(req, res, next) {
-  const { title, description, latitude, longitude } = req.body;
-  if (!title || !description || !latitude || !longitude) {
-    return res.status(400).json({ error: "Values must be completed." });
+router.post('/photos', function(req, res, next) {
+  const { title, description, latitude, longitude, url } = req.body;
+  if (!title || !description || !latitude || !longitude || !url) {
+    return res.status(400).json({ error: "All fields must be completed." });
   }
   if (isNaN(Number(latitude)) || isNaN(Number(longitude))) {
-    return res.status(400).json({ error: "Latitude e longitude must be numbers." });
-}
-db.beginTransaction()
-.then(() => {
-  const query = 'INSERT INTO pic_table (title, description, latitude, longitude) VALUES (?, ?, ?, ?)';
-  const values = [title, description, latitude, longitude];
-  return db(query, values);
-})
+    return res.status(400).json({ error: "Latitude and longitude must be numbers." });
+  }
+
+  db.beginTransaction()
+    .then(() => {
+      const query = 'INSERT INTO pic_table (title, description, latitude, longitude, url) VALUES (?, ?, ?, ?, ?)';
+      const values = [title, description, latitude, longitude, url];
+      return db(query, values);
+    })
     .then(result => {
-      db.commit();
+      return db.commit().then(() => result);
+    })
+    .then(result => {
       res.json(result);
-})
+    })
     .catch(error => {
       db.rollback();
       console.error(error);
@@ -38,10 +41,10 @@ db.beginTransaction()
 });
 
 /* GET all photos from database */
-router.get('/photos_gis', function(req, res, next) {
+router.get('/photos', function(req, res, next) {
   const query = 'SELECT * FROM pic_table';
   db(query)
-    .then(result => res.json(result))
+    .then(result => res.json(result.data))
     .catch(error => {
       console.error(error);
       res.status(500).json({ error: "Error fetching from the database" });
@@ -50,7 +53,7 @@ router.get('/photos_gis', function(req, res, next) {
 
 /* GET single photo by ID */
 router.get('/photos/:id', function(req, res, next) {
-  const { id } = req.params.id;
+  const { id } = req.params;
   const query = 'SELECT * FROM pic_table WHERE id = ?';
   db(query, [id])
     .then(result => {
