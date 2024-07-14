@@ -50,8 +50,7 @@ const PhotoUploadForm = ({ onPhotoUpload }) => {
   };
 
   return (
-    <div className="header-bottom">
-      <div className="container">
+
         <div className="upload-section">
           <div className="upload-buttons">
             <div className="upload-icon">
@@ -61,7 +60,7 @@ const PhotoUploadForm = ({ onPhotoUpload }) => {
             </div>
             <h3 className="upload-title">Upload a Photo</h3>
             <p className="upload-info">PNG, JPG, JPEG any size</p>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className='upload-form'>
               <input type="file" onChange={handleFileChange} />
               <label htmlFor="title">Title:</label>
               <input type="text" id="title" value={title} onChange={(e) => setTitle(e.target.value)} />
@@ -77,8 +76,7 @@ const PhotoUploadForm = ({ onPhotoUpload }) => {
             <input type="text" id="drag-info" value={longitude} onChange={(e) => setUrl(e.target.value)} />
           </div>
         </div>
-      </div>
-    </div>
+
   );
 };
 

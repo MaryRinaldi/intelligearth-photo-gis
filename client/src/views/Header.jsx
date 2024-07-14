@@ -2,9 +2,8 @@
 import React from 'react';
 import SocialMediaIcon from '../assets/Social-Media-People-Doodles.jpg';
 import LogoIcon from '../assets/Logo.png';
-import PhotoUploadForm from '../components/PhotoUploadForm';
 
-const Header = ({ onPhotoUpload }) => (
+const Header = () => (
   <header className="header">
     <div className="header-top">
       <div className="container">
@@ -21,7 +20,7 @@ const Header = ({ onPhotoUpload }) => (
         </nav>
       </div>
     </div>
-    <PhotoUploadForm onPhotoUpload={onPhotoUpload} />
+
   </header>
 );
 

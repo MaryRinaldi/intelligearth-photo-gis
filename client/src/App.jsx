@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Header from './views/Header';
 import MapComponent from './components/MapComponent';
 import PhotoGrid from './views/PhotoGrid';
+import PhotoUploadForm from './components/PhotoUploadForm'
 import './App.css';
 
 const mockPhotos = [
@@ -23,7 +24,7 @@ const mockPhotos = [
   },
 ];
 
-function App() {
+function App({onPhotoUpload}) {
   const [uploadedPhotos, setUploadedPhotos] = useState([]);
 
   const handlePhotoUpload = (photoUrl) => {
@@ -33,6 +34,7 @@ function App() {
   return (
     <div className="App">
       <Header onPhotoUpload={handlePhotoUpload} />
+      <PhotoUploadForm onPhotoUpload={onPhotoUpload} />
       <MapComponent photos={mockPhotos} />
       <PhotoGrid photos={[...uploadedPhotos, ...mockPhotos]} />
     </div>
