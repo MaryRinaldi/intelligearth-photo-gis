@@ -1,0 +1,170 @@
+/* Reset CSS */
+body {
+    font-family: 'Inter', 'Noto Sans', sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Centralizzazione colori */
+  :root {
+    --color-primary: #0d151c;
+    --color-secondary: #2094f3;
+    --color-text: #49779c;
+    --color-background-light: #e7eef4;
+    --color-background-white: #ffffff;
+  }
+  
+  /* Header */
+  .header {
+    border-bottom: 1px solid var(--color-background-light);
+  }
+  
+  .header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 10px;
+  }
+  
+  .header .logo {
+    display: flex;
+    align-items: center;
+    
+  }
+  
+  .header .logo .logo-icon {
+    width: 34px;
+    height: 34px;
+    fill: var(--color-primary);
+  }
+  
+  .header .logo h2 {
+    color: var(--color-primary);
+    font-size: 1.5rem;
+    font-weight: 900;
+    margin-left: 10px;
+  }
+  
+  .header .nav-links {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .header .nav-links .nav-link {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: 0.015em;
+    transition: color 0.3s ease;
+  }
+  
+  .header .nav-links .nav-link:hover {
+    color: var(--color-secondary);
+  }
+  
+  .upload-section {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+  }
+  
+  .upload-section .upload-buttons {
+    background-color: var(--color-background-white);
+    border-radius: 8px;
+    border: 1px solid var(--color-background-light);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .upload-section .upload-buttons .upload-icon {
+    width: 60px;
+    height: 60px;
+    background-color: var(--color-background-light);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .upload-section .upload-buttons .upload-icon-svg {
+    width: 30px;
+    height: 30px;
+    fill: var(--color-text);
+  }
+  
+  .upload-section .upload-buttons .upload-title {
+    color: var(--color-secondary);
+    font-size: 1.125rem;
+    font-weight: bold;
+  }
+  
+  .upload-section .upload-buttons .upload-info {
+    color: var(--color-text);
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+  
+  .upload-section .upload-buttons .upload-button {
+    background-color: var(--color-secondary);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .upload-section .upload-buttons .upload-button:hover {
+    background-color: #0e6ae6;
+  }
+  
+  .upload-section .upload-buttons .drag-info {
+    color: var(--color-text);
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+  
+  .social-media-icon {
+    width: 64px; 
+    height: 64px; 
+    margin-left: auto; 
+  }
+  
+  @media (max-width: 768px) {
+    .header .container {
+      flex-direction: column;
+      gap: 20px;
+    }
+  
+    .header .logo {
+      margin-bottom: 20px;
+    }
+  
+    .header .nav-links {
+      flex-direction: column;
+      gap: 10px;
+    }
+  
+    .upload-section .upload-buttons {
+      padding: 15px;
+    }
+  
+    .upload-section .upload-buttons .upload-icon {
+      width: 50px;
+      height: 50px;
+    }
+  
+    .upload-section .upload-buttons .upload-icon-svg {
+      width: 25px;
+      height: 25px;
+    }
+  }
+  
