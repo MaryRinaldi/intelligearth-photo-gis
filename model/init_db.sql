@@ -9,6 +9,5 @@ CREATE TABLE pic_table (
     latitude DECIMAL(10, 8) NOT NULL,
     longitude DECIMAL(11, 8) NOT NULL,
     url VARCHAR(255) NOT NULL,
-
     PRIMARY KEY (id)
 );

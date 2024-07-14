@@ -7,20 +7,19 @@ const PhotoUploadForm = ({ onPhotoUpload }) => {
   const [longitude, setLongitude] = useState('');
   const [photos, setPhotos] = useState([]);
   const [url, setUrl] = useState('');
-  const [photoIdCounter, setPhotoIdCounter] = useState(1); // Contatore per gli ID delle foto
+  const [photoIdCounter, setPhotoIdCounter] = useState(1); 
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     setPhotos([...photos, { id: photoIdCounter, file }]);
-    setPhotoIdCounter(photoIdCounter + 1); // Incrementa il contatore degli ID delle foto
+    setPhotoIdCounter(photoIdCounter + 1); 
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
       const formData = new FormData();
-      formData.append('photo', photos[photos.length - 1].file); // Utilizza l'ultimo file aggiunto
+      formData.append('photo', photos[photos.length - 1].file); //use last added file
       formData.append('title', title);
       formData.append('description', description);
       formData.append('latitude', latitude);
@@ -32,22 +31,18 @@ const PhotoUploadForm = ({ onPhotoUpload }) => {
         body: formData,
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to upload photo');
+      if (response.ok) {
+        const responseData = await response.json();
+        onPhotoUpload(responseData.photo.url);
+        // Reset form fields
+        setTitle('');
+        setDescription('');
+        setLatitude('');
+        setLongitude('');
+        setUrl('');
+      } else {
+        console.error('Failed to upload photo');
       }
-
-      const responseData = await response.json();
-      onPhotoUpload(responseData.photoUrl);
-
-      // Reset form fields after submission
-      setTitle('');
-      setDescription('');
-      setLatitude('');
-      setLongitude('');
-      setUrl('');
-    } catch (error) {
-      console.error('Error uploading photo:', error);
-    }
   };
 
   return (
