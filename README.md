@@ -22,7 +22,7 @@ Intelligearth Photo GIS aims to provide a platform where users can upload photos
 
 ## Folder Structure
 
-intelligearth-photo-gis/
+```intelligearth-photo-gis/
 ├── bin/
 ├── client/
 │ ├── dist/
@@ -52,7 +52,7 @@ intelligearth-photo-gis/
 ├── app.js
 ├── package-lock.json
 ├── package.json
-└── README.md
+└── README.md```
 
 ## Setup Instructions
 
