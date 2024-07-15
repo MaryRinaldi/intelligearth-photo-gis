@@ -21,21 +21,15 @@ router.post('/photos', function(req, res, next) {
     return res.status(400).json({ error: "Latitude and longitude must be numbers." });
   }
 
-  db.beginTransaction()
-    .then(() => {
-      const query = 'INSERT INTO pic_table (title, description, latitude, longitude, url) VALUES (?, ?, ?, ?, ?)';
-      const values = [title, description, latitude, longitude, url];
-      return db(query, values);
-    })
-    .then(result => {
-      return db.commit().then(() => result);
-    })
+  const query = 'INSERT INTO pic_table (title, description, latitude, longitude, url) VALUES (?, ?, ?, ?, ?)';
+  const values = [title, description, latitude, longitude, url];
+
+  db.executeQuery(query, values)
     .then(result => {
       res.json(result);
     })
     .catch(error => {
-      db.rollback();
-      console.error(error);
+      console.error('Error inserting data into the database:', error);
       res.status(500).json({ error: "Error inserting data into the database" });
     });
 });
@@ -43,11 +37,11 @@ router.post('/photos', function(req, res, next) {
 /* GET all photos from database */
 router.get('/photos', function(req, res, next) {
   const query = 'SELECT * FROM pic_table';
-  db(query)
-    .then(result => res.json(result.data))
+  db.executeQuery(query)
+    .then(result => res.json(result))
     .catch(error => {
-      console.error(error);
-      res.status(500).json({ error: "Error fetching from the database" });
+      console.error('Error fetching data from the database:', error);
+      res.status(500).json({ error: "Error fetching data from the database" });
     });
 });
 
@@ -55,17 +49,17 @@ router.get('/photos', function(req, res, next) {
 router.get('/photos/:id', function(req, res, next) {
   const { id } = req.params;
   const query = 'SELECT * FROM pic_table WHERE id = ?';
-  db(query, [id])
+  db.executeQuery(query, [id])
     .then(result => {
-      if (result.data.length === 0) {
+      if (result.length === 0) {
         res.status(404).json({ error: `Photo with ID ${id} not found` });
       } else {
-        res.json(result.data[0]);
+        res.json(result[0]);
       }
     })
     .catch(error => {
-      console.error(error);
-      res.status(500).json({ error: "Error fetching photo from the database" });
+      console.error('Error fetching single photo from the database:', error);
+      res.status(500).json({ error: "Error fetching single photo from the database" });
     });
 });
 

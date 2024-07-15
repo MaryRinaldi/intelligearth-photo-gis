@@ -22,6 +22,8 @@ body {
   width: 70px;
   height: 70px;
   margin-left: auto;
+  border-radius: 50%;
+  zoom: 100%;
 }
 
 .header {
@@ -45,8 +47,9 @@ body {
 }
 
 .header .logo .logo-icon {
-  width: 54px;
-  height: 54px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
   fill: var(--color-primary);
 }
 

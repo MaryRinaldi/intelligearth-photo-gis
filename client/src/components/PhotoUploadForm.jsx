@@ -26,7 +26,7 @@ const PhotoUploadForm = ({ onPhotoUpload }) => {
       formData.append('longitude', longitude);
       formData.append('url', url);
 
-      const response = await fetch('http://localhost:5000/api/upload', {
+      const response = await fetch('http://localhost:5000/api/photos', {
         method: 'POST',
         body: formData,
       });

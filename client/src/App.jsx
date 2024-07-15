@@ -35,7 +35,7 @@ function App({onPhotoUpload}) {
       longitude: 0, 
       url: photoUrl,
     };
-    const response = await fetch('http://localhost:5000/api/upload', {
+    const response = await fetch('http://localhost:5000/api/photos', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

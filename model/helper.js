@@ -1,65 +1,57 @@
 require("dotenv").config();
 const mysql = require("mysql");
 
-module.exports = async function db(query, values = []) {
-  const results = {
-    data: [],
-    error: null
-  };
+const pool = mysql.createPool({
+  connectionLimit: 10,
+  host: process.env.DB_HOST || "127.0.0.1",
+  user: process.env.DB_USER || "root",
+  password: process.env.DB_PASS,
+  database: process.env.DB_NAME || "photo_gis",
+  multipleStatements: true
+});
 
-  let promise = await new Promise((resolve, reject) => {
-    const DB_HOST = process.env.DB_HOST;
-    const DB_USER = process.env.DB_USER;
-    const DB_PASS = process.env.DB_PASS;
-    const DB_NAME = process.env.DB_NAME;
-
-    const con = mysql.createConnection({
-      host: DB_HOST || "127.0.0.1",
-      user: DB_USER || "root",
-      password: DB_PASS,
-      database: DB_NAME || "photo_gis",
-      multipleStatements: true
-    });
-
-    con.connect(function(err) {
+function executeQuery(query, values = []) {
+  return new Promise((resolve, reject) => {
+    pool.getConnection((err, connection) => {
       if (err) {
-        results.error = err;
-        console.log("Error connecting to database:", err);
-        reject(err);
-        return;
+        console.error('Error connecting to database:', err);
+        return reject(err);
       }
 
-      console.log("Connected to database!");
-
-      con.query(query, values, function(err, result) {
+      connection.beginTransaction(err => {
         if (err) {
-          results.error = err;
-          console.log("Error executing query:", err);
-          reject(err);
-          con.end();
-          return;
+          connection.release();
+          console.error('Error beginning transaction:', err);
+          return reject(err);
         }
 
-        if (!result.length) {
-          if (result.affectedRows === 0) {
-            results.error = "Action not complete";
-            console.log("Action not complete:", err);
-            reject(err);
-            con.end();
-            return;
+        connection.query(query, values, (err, result) => {
+          if (err) {
+            connection.rollback(() => {
+              connection.release();
+              console.error('Error rolling back transaction:', err);
+              return reject(err);
+            });
           }
-        } else if (result[0].constructor.name == "RowDataPacket") {
-          result.forEach(row => results.data.push(row));
-        } else if (result[0].constructor.name == "OkPacket") {
-          results.data.push(result[0]);
-        }
 
-        console.log("Query executed successfully:", result);
-        con.end();
-        resolve(results);
+          connection.commit(err => {
+            if (err) {
+              connection.rollback(() => {
+                connection.release();
+                console.error('Error committing transaction:', err);
+                return reject(err);
+              });
+            }
+
+            connection.release();
+            resolve(result);
+          });
+        });
       });
     });
   });
+}
 
-  return promise;
+module.exports = {
+  executeQuery
 };

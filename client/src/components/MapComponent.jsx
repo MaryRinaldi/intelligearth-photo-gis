@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import mapboxgl from 'mapbox-gl';
 
-mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN;
+mapboxgl.accessToken ='pk.eyJ1IjoibWFyeXJpbmFsZGkiLCJhIjoiY2x5azZyOWVrMGNoMzJqcjVpZmx6enp0cCJ9.lXQPwhWhUJw8deFEyDQeug'
+
 
 function MapComponent({ photos }) {
   const mapContainerRef = useRef(null);
@@ -67,7 +68,7 @@ function MapComponent({ photos }) {
     };
 
     console.log('Photo data to be sent to the server:', photoData);
-    fetch('/api/save-pic', {
+    fetch('/api/photos', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
