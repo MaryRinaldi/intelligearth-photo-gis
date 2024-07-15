@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import LogoIcon from '../assets/Logo.png';
 
 const PhotoUploadForm = ({ onPhotoUpload }) => {
   const [title, setTitle] = useState('');
@@ -67,13 +68,11 @@ const PhotoUploadForm = ({ onPhotoUpload }) => {
 
   return (
     <div className="upload-section">
-      <div className="upload-buttons">
-        <div className="upload-icon">
-          <svg viewBox="0 0 22 24" xmlns="http://www.w3.org/2000/svg" fill="#49779c" width="39px" height="45px">
-            <path d="M12 6.5h-1.5v4h-4v1.5h4v4h1.5v-4h4v-1.5h-4v-4z"/>
-          </svg>
+      <div className="logo">
+      <img src={LogoIcon} alt="Logo Icon" className="logo-icon" /> 
+      <h2>SNAPIFY</h2>
         </div>
-        <h3 className="upload-title">Upload a Photo</h3>
+        <h2 className="upload-title">Upload here your photo</h2>
         <p className="upload-info">PNG, JPG, JPEG any size</p>
         <form onSubmit={handleSubmit} className="upload-form">
           <input type="file" onChange={handleFileChange} multiple />
@@ -90,7 +89,6 @@ const PhotoUploadForm = ({ onPhotoUpload }) => {
           <button type="submit" className="upload-button">Upload</button>
         </form>
       </div>
-    </div>
   );
 };
 
