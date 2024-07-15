@@ -5,27 +5,43 @@ const PhotoUploadForm = ({ onPhotoUpload }) => {
   const [description, setDescription] = useState('');
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
-  const [photos, setPhotos] = useState([]);
-  const [url, setUrl] = useState('');
-  const [photoIdCounter, setPhotoIdCounter] = useState(1); 
+  const [files, setFiles] = useState([]); // State to hold the selected files
+  const [url, setUrl] = useState(''); // State for URL input
 
   const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    setPhotos([...photos, { id: photoIdCounter, file }]);
-    setPhotoIdCounter(photoIdCounter + 1); 
+    const newFiles = Array.from(e.target.files).map(file => ({
+      id: Date.now(), // Generate unique ID for each file
+      file: file
+    }));
+    setFiles([...files, ...newFiles]);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-      const formData = new FormData();
-      formData.append('photo', photos[photos.length - 1].file); //use last added file
-      formData.append('title', title);
-      formData.append('description', description);
-      formData.append('latitude', latitude);
-      formData.append('longitude', longitude);
-      formData.append('url', url);
+    if (files.length === 0 && !url) {
+      console.error('No file selected or URL provided');
+      return;
+    }
 
+    const formData = new FormData();
+
+    // Append each file to formData
+    files.forEach(({ file }) => {
+      formData.append('photos', file); // Use 'photos' to handle multiple files on the server
+    });
+
+    formData.append('title', title);
+    formData.append('description', description);
+    formData.append('latitude', latitude);
+    formData.append('longitude', longitude);
+
+    // Append URL if provided
+    if (url) {
+      formData.append('url', url);
+    }
+
+    try {
       const response = await fetch('http://localhost:5000/api/photos', {
         method: 'POST',
         body: formData,
@@ -39,10 +55,14 @@ const PhotoUploadForm = ({ onPhotoUpload }) => {
         setDescription('');
         setLatitude('');
         setLongitude('');
+        setFiles([]);
         setUrl('');
       } else {
         console.error('Failed to upload photo');
       }
+    } catch (error) {
+      console.error('Error uploading photo:', error);
+    }
   };
 
   return (
@@ -56,7 +76,7 @@ const PhotoUploadForm = ({ onPhotoUpload }) => {
         <h3 className="upload-title">Upload a Photo</h3>
         <p className="upload-info">PNG, JPG, JPEG any size</p>
         <form onSubmit={handleSubmit} className="upload-form">
-          <input type="file" onChange={handleFileChange} />
+          <input type="file" onChange={handleFileChange} multiple />
           <label htmlFor="title">Title:</label>
           <input type="text" id="title" value={title} onChange={(e) => setTitle(e.target.value)} />
           <label htmlFor="description">Description:</label>
@@ -65,10 +85,10 @@ const PhotoUploadForm = ({ onPhotoUpload }) => {
           <input type="text" id="latitude" value={latitude} onChange={(e) => setLatitude(e.target.value)} />
           <label htmlFor="longitude">Longitude:</label>
           <input type="text" id="longitude" value={longitude} onChange={(e) => setLongitude(e.target.value)} />
+          <label htmlFor="url">Insert your URL here:</label>
+          <input type="text" id="url" value={url} onChange={(e) => setUrl(e.target.value)} />
           <button type="submit" className="upload-button">Upload</button>
         </form>
-        <label htmlFor="url">Or insert your URL here:</label>
-        <input type="text" id="url" value={url} onChange={(e) => setUrl(e.target.value)} />
       </div>
     </div>
   );
