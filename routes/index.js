@@ -3,46 +3,40 @@ var router = express.Router();
 var db = require("../model/helper");
 require("dotenv").config();
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.send({ title: 'Express' });
-});
-
 let processingRequest = false;
 
 /* POST request for saving data */
-router.post('/photos', async (req, res, next) => {
+router.post('/photos', async (req, res) => {
   if (processingRequest) {
     return res.status(400).json({ error: "Duplicate request" });
   }
+
   const { title, description, latitude, longitude, url } = req.body;
 
-  // Verifica se tutti i campi obbligatori sono presenti
   if (!title || !description || !latitude || !longitude || !url) {
     console.log('Missing required fields:', { title, description, latitude, longitude, url });
-    return res.status(400).json({ error: "Title, description, url, latitude, and longitude are required fields." });
+    return res.status(400).json({ error: "Missing fields." });
   }
 
-  // Conversione di latitude e longitude in numeri decimali
   const lat = Number(latitude);
   const lng = Number(longitude);
 
-  // Verifica se latitude e longitude sono numeri validi
   if (isNaN(lat) || isNaN(lng)) {
     console.log('Invalid latitude or longitude:', { latitude, longitude });
     return res.status(400).json({ error: "Latitude and longitude must be numbers." });
   }
 
-  // Prepara la query per l'inserimento nel database
   const query = 'INSERT INTO pic_table (title, description, latitude, longitude, url) VALUES (?, ?, ?, ?, ?)';
   const values = [title, description, lat, lng, url];
+  
   processingRequest = true;
   try {
     const result = await db.executeQuery(query, values);
-    res.json({ message: 'Photo uploaded successfully', url: url });
+    res.json({ values, id: result.insertId });
   } catch (error) {
     console.error('Error inserting data into the database:', error);
     res.status(500).json({ error: "Error inserting data into the database" });
+  } finally {
     processingRequest = false;
   }
 });

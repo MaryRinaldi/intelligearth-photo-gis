@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import LogoIcon from '../assets/Logo.png';
 
-const PhotoUploadForm = ({ onPhotoUpload }) => {
+const PhotoUploadForm = ({ onPhotoUpload, setUploadedImageUrl }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [latitude, setLatitude] = useState('');
@@ -29,6 +29,7 @@ const PhotoUploadForm = ({ onPhotoUpload }) => {
       return;
     }
 
+    // Verifica che i campi obbligatori siano presenti
     if (!title || !description || !url) {
       console.error('Missing required fields:', { title, description, latitude, longitude, url });
       return;
@@ -50,24 +51,32 @@ const PhotoUploadForm = ({ onPhotoUpload }) => {
         },
         body: JSON.stringify(requestData),
       });
-      console.log('Latitude:', numLatitude);
-console.log('Longitude:', numLongitude);
+      
       if (response.ok) {
         const responseData = await response.json();
         console.log('Response Data:', responseData);
         
-        if (responseData.url) {
-          console.log('Photo URL:', responseData.url);
-          onPhotoUpload(responseData.url);
+        // Verifica che la risposta contenga sia 'id' che 'values'
+        if (responseData.id && responseData.values && responseData.values.length > 4) {
+          const uploadedUrl = responseData.values[4]; // Assume che 'url' sia il quinto elemento in 'values'
+          
+          if (uploadedUrl) {
+            console.log('Photo URL:', uploadedUrl);
+            setUploadedImageUrl(uploadedUrl); // Imposta l'URL dell'immagine caricata in App.jsx
+            onPhotoUpload(uploadedUrl);
+            
+            // Reimposta i campi del form dopo il caricamento
+            setTitle('');
+            setDescription('');
+            setLatitude('');
+            setLongitude('');
+            setUrl('');
+          } else {
+            console.error('Photo URL not found in response data');
+          }
         } else {
-          console.error('Photo URL not found in response data');
+          console.error('Unexpected response structure:', responseData);
         }
-
-        setTitle('');
-        setDescription('');
-        setLatitude('');
-        setLongitude('');
-        setUrl('');
       } else {
         console.error('Failed to upload photo');
       }
@@ -82,7 +91,7 @@ console.log('Longitude:', numLongitude);
         <img src={LogoIcon} alt="Logo Icon" className="logo-icon" /> 
         <h2>SNAPIFY</h2>
       </div>
-      <h2 className="upload-title">Upload here your photo</h2>
+      <h2 className="upload-title">Upload your photo here</h2>
       <p className="upload-info">PNG, JPG, JPEG any size</p>
       <form onSubmit={handleSubmit} className="upload-form">
         <input type="file" onChange={handleFileChange} multiple />

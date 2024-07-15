@@ -3,6 +3,7 @@ import Header from './views/Header';
 import MapComponent from './components/MapComponent';
 import PhotoGrid from './views/PhotoGrid';
 import PhotoUploadForm from './components/PhotoUploadForm'
+import UploadedImagePreview from './views/UploadedImagePreview';
 
 import './App.css';
 
@@ -25,34 +26,39 @@ const mockPhotos = [
   },
 ];
 
-function App({onPhotoUpload}) {
+function App() {
   const [uploadedPhotos, setUploadedPhotos] = useState([]);
+ const [uploadedImageUrl, setUploadedImageUrl] = useState('');
 
-  const handlePhotoUpload = async (url) => {
-    const newPhoto = {
-      title: 'Uploaded Photo',
-      description: 'This is an uploaded photo',
-      latitude: 0, 
-      longitude: 0, 
-      url: url,
-    };
-    const response = await fetch('http://localhost:5000/api/photos', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(newPhoto),
-    });
-  
-    if (response.ok) {
-      const uploadedPhoto = await response.json();
-      setUploadedPhotos([...uploadedPhotos, uploadedPhoto]);
-    }
+  const handlePhotoUpload = (url) => {
+    setUploadedImageUrl(url);
   };
+
+  // const handlePhotoUpload = async (url) => {
+  //   const newPhoto = {
+  //     title: 'Uploaded Photo',
+  //     description: 'This is an uploaded photo',
+  //     latitude: 0, 
+  //     longitude: 0, 
+  //     url: url,
+  //   };
+  //   const response = await fetch('http://localhost:5000/api/photos', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify(newPhoto),
+  //   });
+  
+  //   if (response.ok) {
+  //     const uploadedPhoto = await response.json();
+  //     setUploadedPhotos([...uploadedPhotos, uploadedPhoto]);
+  //   }
+  // };
 
   return (
     <>
-    <PhotoUploadForm onPhotoUpload={handlePhotoUpload} />
+    <PhotoUploadForm onPhotoUpload={handlePhotoUpload} setUploadedImageUrl={setUploadedImageUrl} />
     <div className="App">
       <Header onPhotoUpload={handlePhotoUpload} />
       <div className='introduction'>
@@ -76,9 +82,11 @@ Spero che ti aiuti a rivivere i tuoi momenti speciali e a non perdere mai più u
       </div>
       <MapComponent photos={mockPhotos} />
       <PhotoGrid photos={[...uploadedPhotos, ...mockPhotos]} />
+      <div>
+      {uploadedImageUrl && <UploadedImagePreview imageUrl={uploadedImageUrl} />}
+    </div>
     </div>
     </>
-    
   );
 }
 
