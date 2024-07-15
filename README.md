@@ -92,3 +92,4 @@ npm run dev
 ### Contributing
 
 Feel free to contribute to this project by forking it and submitting a pull request. For major changes, please open an issue first to discuss what you would like to change.
+Thank you *
