@@ -19,11 +19,10 @@ body {
 /* Header.jsx */
 
 .social-media-icon {
-  width: 70px;
-  height: 70px;
+  width: 120px;
+  height: 120px;
   margin-left: auto;
-  border-radius: 50%;
-  zoom: 100%;
+  border-radius: 30%;
 }
 
 .header {
@@ -32,13 +31,13 @@ body {
 }
 
 .header .container {
-  height: 5%;
+  height: 4%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 20px 10px;
+  padding: 10px 10px;
 }
 
 .header .logo {
