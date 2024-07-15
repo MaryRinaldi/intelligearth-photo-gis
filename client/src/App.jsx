@@ -28,13 +28,13 @@ const mockPhotos = [
 function App({onPhotoUpload}) {
   const [uploadedPhotos, setUploadedPhotos] = useState([]);
 
-  const handlePhotoUpload = async (photoUrl) => {
+  const handlePhotoUpload = async (url) => {
     const newPhoto = {
       title: 'Uploaded Photo',
       description: 'This is an uploaded photo',
       latitude: 0, 
       longitude: 0, 
-      url: photoUrl,
+      url: url,
     };
     const response = await fetch('http://localhost:5000/api/photos', {
       method: 'POST',
@@ -52,7 +52,7 @@ function App({onPhotoUpload}) {
 
   return (
     <>
-    <PhotoUploadForm onPhotoUpload={onPhotoUpload} />
+    <PhotoUploadForm onPhotoUpload={handlePhotoUpload} />
     <div className="App">
       <Header onPhotoUpload={handlePhotoUpload} />
       <div className='introduction'>
