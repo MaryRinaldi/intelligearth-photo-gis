@@ -15,7 +15,7 @@ const mockPhotos = [
     id: 1,
     title: 'Photo 1',
     description: 'Description 1',
-    latitude: 41.9028,
+    latitude: 41.9038,
     longitude: 12.4964,
     url: 'https://images.unsplash.com/photo-1525874684015-58379d421a52?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8cm9tYXxlbnwwfHwwfHx8MA%3D%3D'
   },
@@ -23,8 +23,8 @@ const mockPhotos = [
     id: 2,
     title: 'Photo 2',
     description: 'Description 2',
-    latitude: 40.9038,
-    longitude: 12.4965,
+    latitude: 41.8748,
+    longitude: 12.4665,
     url: 'https://images.unsplash.com/photo-1542820229-081e0c12af0b?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHJvbWF8ZW58MHx8MHx8fDA%3D%3D'
   },
 ];
@@ -35,6 +35,7 @@ function App() {
 
   const handlePhotoUpload = (url) => {
     setUploadedImageUrl(url);
+    setUploadedPhotos([...uploadedPhotos, { id: Date.now(), title:'Photo title', description:'Photo description', latitude: 0, longitude: 0, url}]);
   };
 
   useEffect(() => {
@@ -48,10 +49,11 @@ function App() {
     <>
     <Header />
     <Routes>
-    <Route path="/" element={<FrontPage mockPhotos={mockPhotos} uploadedPhotos={uploadedPhotos} />} />
+    <Route path="/" element={<FrontPage mockPhotos={mockPhotos} photos={[...mockPhotos, ...uploadedPhotos]} uploadedPhotos={uploadedPhotos} lastUploadedUrl={uploadedImageUrl} />} />
         <Route path="/gallery" element={<PhotoGrid photos={uploadedPhotos} />} />
-        <Route path="/map" element={<MapComponent photos={[...mockPhotos, ...uploadedPhotos]} />} />
+        <Route path="/map" element={<MapComponent photos={uploadedPhotos} lastUploadedUrl={uploadedImageUrl} />} />
       {/* <Route path="/profilepage" element={<Private> <ProfilePage/> </Private>} /> */}
+      <Route path='/photoupload' element={<PhotoUploadForm onPhotoUpload={handlePhotoUpload} />} />
     </Routes>
     
     <div className="footer">

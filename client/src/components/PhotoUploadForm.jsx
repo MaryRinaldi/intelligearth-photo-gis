@@ -7,6 +7,7 @@ const PhotoUploadForm = ({ onPhotoUpload, setUploadedImageUrl }) => {
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
   const [url, setUrl] = useState('');
+  const [uploadedPhotoUrl, setUploadedPhotoUrl] = useState('');
 
   const handleFileChange = (e) => {
     const selectedFiles = Array.from(e.target.files).map(file => ({
@@ -19,6 +20,7 @@ const PhotoUploadForm = ({ onPhotoUpload, setUploadedImageUrl }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+
     // Converti latitude e longitude in numeri
     const numLatitude = Number(latitude);
     const numLongitude = Number(longitude);
@@ -26,12 +28,14 @@ const PhotoUploadForm = ({ onPhotoUpload, setUploadedImageUrl }) => {
     // Verifica che siano numeri validi
     if (isNaN(numLatitude) || isNaN(numLongitude)) {
       console.error('Invalid latitude or longitude:', { latitude, longitude });
+      alert('Lat e Long must be valid numbers!')
       return;
     }
 
     // Verifica che i campi obbligatori siano presenti
     if (!title || !description || !url) {
       console.error('Missing required fields:', { title, description, latitude, longitude, url });
+      alert('All fields are required!')
       return;
     }
 
@@ -79,9 +83,11 @@ const PhotoUploadForm = ({ onPhotoUpload, setUploadedImageUrl }) => {
         }
       } else {
         console.error('Failed to upload photo');
+        alert('Failed to upload photo!')
       }
     } catch (error) {
       console.error('Error uploading photo:', error);
+      alert('Error uploading photo!')
     }
   };
 

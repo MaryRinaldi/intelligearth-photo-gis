@@ -45,6 +45,9 @@ Hai mai scattato una foto incredibile e poi hai trascorso ore a cercare di ricor
 <br></br>
 Bene, è arrivato il momento di porre fine alla confusione! <br></br> Con la mia app, puoi caricare le tue foto, aggiungere titoli e descrizioni memorabili, e salvare con precisione la latitudine e la longitudine per non dimenticare mai il luogo esatto del tuo momento speciale.
 <br></br>
+Usa SNAPIFY per caricare sull'app le tue foto. Seleziona i parametri (titolo, descrizione, latitudine e longitudine), poi immetti l'URL dell'immagine che preferisci. Troverai le tue foto caricate sulla mappa (Map) e sulla galleria (Gallery) accessibili tramite il menu in altro a destra.
+<br></br>
+<br></br>
 Clicca sulla mappa per impostare le tue foto alla posizione (longitude, latitude) che preferisci. Ti basterà caricare la foto dopo aver cliccato sulla mappa!
 <br></br>
 Altrimenti, usa il geolocalizzatore per salvare la foto alla tua posizione!
@@ -61,9 +64,12 @@ Grazie per aver scelto la mia app!
 <br></br>
 Spero che ti aiuti a rivivere i tuoi momenti speciali e a non perdere mai più un ricordo. <br></br>Dopotutto, la memoria è un po' come una vecchia scatola di biscotti: piena di sorprese!
 </p>
+<br></br>
       </div>
+       <p>Prova questa mappa con i click! Se invece vuoi vedere le tue foto caricate sulla mappa, vai sul Menu/Map. Lì troverai una mappa più grande.</p>
       <MapComponent photos={mockPhotos} />
-      <div className="photo-grid">
+      <p>Queste sono le mie foto-esempio. Vai su Menu/Gallery per vedere le tue!</p>
+      <div className="photo-grid">  
       {[...uploadedPhotos, ...mockPhotos].map((photo) => (
         <div key={photo.id} className="photo-item">
           <img src={photo.url} alt={photo.title} />
