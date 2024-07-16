@@ -1,40 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import MapComponent from '../components/MapComponent';
 import PhotoUploadForm from '../components/PhotoUploadForm';
 import UploadedImagePreview from './UploadedImagePreview';
 import '../App.css'
 
-function FrontPage ({photos, mockPhotos}) {
+function FrontPage ({ photos, mockPhotos }) {
 
 const [uploadedPhotos, setUploadedPhotos] = useState([]);
 const [uploadedImageUrl, setUploadedImageUrl] = useState('');
+const [lastUploadedUrl, setLastUploadedUrl] = useState('');
 
 const handlePhotoUpload = (url) => {
 setUploadedImageUrl(url);
+setLastUploadedUrl(url);
 };
 
-  // const handlePhotoUpload = async (url) => {
-  //   const newPhoto = {
-  //     title: 'Uploaded Photo',
-  //     description: 'This is an uploaded photo',
-  //     latitude: 0, 
-  //     longitude: 0, 
-  //     url: url,
-  //   };
-  //   const response = await fetch('http://localhost:5000/api/photos', {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify(newPhoto),
-  //   });
-  
-  //   if (response.ok) {
-  //     const uploadedPhoto = await response.json();
-  //     setUploadedPhotos([...uploadedPhotos, uploadedPhoto]);
-  //   }
-  // };
+useEffect(() => {
+  fetchLastUploadedUrl();
+}, []);
 
+const fetchLastUploadedUrl = async () => {
+  try {
+    const response = await fetch('/api/photos');
+    if (response.ok) {
+      const data = await response.json();
+      setLastUploadedUrl(data.url);
+    } else {
+      console.error('Failed to fetch last URL');
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+ 
   return (
     <>
     <PhotoUploadForm onPhotoUpload={handlePhotoUpload} setUploadedImageUrl={setUploadedImageUrl} />
@@ -45,10 +44,9 @@ Hai mai scattato una foto incredibile e poi hai trascorso ore a cercare di ricor
 <br></br>
 Bene, è arrivato il momento di porre fine alla confusione! <br></br> Con la mia app, puoi caricare le tue foto, aggiungere titoli e descrizioni memorabili, e salvare con precisione la latitudine e la longitudine per non dimenticare mai il luogo esatto del tuo momento speciale.
 <br></br>
-Usa SNAPIFY per caricare sull'app le tue foto. Seleziona i parametri (titolo, descrizione, latitudine e longitudine), poi immetti l'URL dell'immagine che preferisci. Troverai le tue foto caricate sulla mappa (Map) e sulla galleria (Gallery) accessibili tramite il menu in altro a destra.
+Usa SNAPIFY per caricare sull'app le tue foto. Seleziona i parametri (titolo, descrizione, latitudine e longitudine), poi immetti l'URL dell'immagine che preferisci. Troverai le tue foto caricate sulla mappa (Map) e sulla galleria (Gallery) accessibili tramite il menu in alto a destra.
 <br></br>
 <br></br>
-Clicca sulla mappa per impostare le tue foto alla posizione (longitude, latitude) che preferisci. Ti basterà caricare la foto dopo aver cliccato sulla mappa!
 <br></br>
 Altrimenti, usa il geolocalizzatore per salvare la foto alla tua posizione!
 <br></br>
@@ -67,7 +65,7 @@ Spero che ti aiuti a rivivere i tuoi momenti speciali e a non perdere mai più u
 <br></br>
       </div>
        <p>Prova questa mappa con i click! Se invece vuoi vedere le tue foto caricate sulla mappa, vai sul Menu/Map. Lì troverai una mappa più grande.</p>
-      <MapComponent photos={mockPhotos} />
+      <MapComponent photos={[...uploadedPhotos, ...mockPhotos]} lastUploadedUrl={lastUploadedUrl} setLastUploadedUrl={setLastUploadedUrl} />
       <p>Queste sono le mie foto-esempio. Vai su Menu/Gallery per vedere le tue!</p>
       <div className="photo-grid">  
       {[...uploadedPhotos, ...mockPhotos].map((photo) => (

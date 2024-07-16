@@ -1,10 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import mapboxgl from 'mapbox-gl';
 
-mapboxgl.accessToken ='pk.eyJ1IjoibWFyeXJpbmFsZGkiLCJhIjoiY2x5azZyOWVrMGNoMzJqcjVpZmx6enp0cCJ9.lXQPwhWhUJw8deFEyDQeug'
+mapboxgl.accessToken = 'pk.eyJ1IjoibWFyeXJpbmFsZGkiLCJhIjoiY2x5azZyOWVrMGNoMzJqcjVpZmx6enp0cCJ9.lXQPwhWhUJw8deFEyDQeug';
 
-
-function MapComponent({ photos, lastUploadedUrl }) {
+function MapComponent({ photos, lastUploadedUrl, setLastUploadedUrl }) {
   const mapContainerRef = useRef(null);
   const mapRef = useRef(null);
 
@@ -43,12 +42,13 @@ function MapComponent({ photos, lastUploadedUrl }) {
         mapRef.current.off('click', handleMapClick);
       }
     };
-  }, [photos, lastUploadedUrl]);
+  }, [photos]);
 
   const handleMapClick = (e) => {
     const { lng, lat } = e.lngLat;
 
     console.log(`Latitude: ${lat}, Longitude: ${lng}`);
+    console.log('Last URL:', lastUploadedUrl);
 
     const markerEl = document.createElement('div');
     markerEl.className = 'marker';
@@ -71,6 +71,7 @@ function MapComponent({ photos, lastUploadedUrl }) {
     };
 
     console.log('Photo data to be sent to the server:', photoData);
+
     fetch('/api/photos', {
       method: 'POST',
       headers: {
@@ -81,9 +82,11 @@ function MapComponent({ photos, lastUploadedUrl }) {
     .then(response => response.json())
     .then(data => console.log('Success:', data))
     .catch((error) => console.error('Error:', error));
+
     if (mapRef.current) {
       mapRef.current.setCenter([lng, lat]);
-      }  };
+    }
+  };
 
   const addMarkersToMap = () => {
     if (!mapRef.current || !photos) return;
@@ -109,6 +112,10 @@ function MapComponent({ photos, lastUploadedUrl }) {
         console.error('Error loading image:', error);
         el.remove();
       };
+
+      if (photo === photos[photos.length - 1]) {
+        setLastUploadedUrl(photo.url); // Use setLastUploadedUrl directly
+      }
     });
   };
 

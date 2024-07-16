@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { Routes, Route, Link } from "react-router-dom";
-import Hamburger from './components/HamburgerMenu';
 import Header from './views/Header';
 import MapComponent from './components/MapComponent';
 import PhotoGrid from './views/PhotoGrid';
 import PhotoUploadForm from './components/PhotoUploadForm';
-import UploadedImagePreview from './views/UploadedImagePreview';
 import FrontPage from './views/FrontPage';
 import './App.css';
 import './Media-related.css';
@@ -32,16 +30,22 @@ const mockPhotos = [
 function App() {
   const [uploadedPhotos, setUploadedPhotos] = useState([]);
   const [uploadedImageUrl, setUploadedImageUrl] = useState('');
+  const [lastUploadedUrl, setLastUploadedUrl] = useState('');
 
   const handlePhotoUpload = (url) => {
-    setUploadedImageUrl(url);
+    setLastUploadedUrl(url);
     setUploadedPhotos([...uploadedPhotos, { id: Date.now(), title:'Photo title', description:'Photo description', latitude: 0, longitude: 0, url}]);
   };
 
   useEffect(() => {
     fetch('/api/photos')
       .then(response => response.json())
-      .then(data => setUploadedPhotos(data))
+      .then(data => {
+        setUploadedPhotos(data);
+      if (data.length > 0) {
+        setLastUploadedUrl(data[data.length - 1].url); /* get last URL */
+      }
+      })
       .catch(error => console.error('Error fetching uploaded photos:', error));
   }, []);
 
@@ -49,9 +53,9 @@ function App() {
     <>
     <Header />
     <Routes>
-    <Route path="/" element={<FrontPage mockPhotos={mockPhotos} photos={[...mockPhotos, ...uploadedPhotos]} uploadedPhotos={uploadedPhotos} lastUploadedUrl={uploadedImageUrl} />} />
+    <Route path="/" element={<FrontPage mockPhotos={mockPhotos} photos={[...mockPhotos, ...uploadedPhotos]} uploadedPhotos={uploadedPhotos} lastUploadedUrl={lastUploadedUrl} />} />
         <Route path="/gallery" element={<PhotoGrid photos={uploadedPhotos} />} />
-        <Route path="/map" element={<MapComponent photos={uploadedPhotos} lastUploadedUrl={uploadedImageUrl} />} />
+        <Route path="/map" element={<MapComponent photos={uploadedPhotos} lastUploadedUrl={lastUploadedUrl} setLastUploadedUrl={setLastUploadedUrl}  />} />
       {/* <Route path="/profilepage" element={<Private> <ProfilePage/> </Private>} /> */}
       <Route path='/photoupload' element={<PhotoUploadForm onPhotoUpload={handlePhotoUpload} />} />
     </Routes>
