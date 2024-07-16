@@ -5,12 +5,12 @@
   }
 
 
-  @media only screen and (max-height: 600px) {
+  @media only screen and (min-height: 900px) {
  
     .App, #root {
       padding: 0px;
-      max-height: 90%;
-      max-width: 90%;
+      max-height: 95%;
+      max-width: 95%;
     }
     h2 {
       margin-top: 5%; 
@@ -41,8 +41,8 @@
   
     .App, #root {
       padding: 0px;
-      max-height: 90%;
-      max-width: 90%;
+      max-height: 95%;
+      max-width: 95%;
     }
   
     h2 {
