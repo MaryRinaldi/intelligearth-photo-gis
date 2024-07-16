@@ -5,11 +5,8 @@
   }
 
 
-  @media only screen and (max-height: 400px) {
-    body, #root {
-      background: rgba(255, 255, 255, 0.8); 
-    }
-  
+  @media only screen and (max-height: 700px) {
+ 
     .App {
       padding: 0px;
       max-height: 90%;
@@ -23,11 +20,12 @@
   }
 
 
-@media only screen and (max-width: 600px) {
-    .container {
+@media only screen and (max-width: 900px) {
+    .upload-section {
       padding: 0px;
-      max-height: 90%;
-      max-width: 90%;
+      min-width: 70%;
+      transform: scale(0.9); 
+      transform-origin: top left;
     }
 
     .footer {
@@ -39,15 +37,6 @@
       text-align: center;
       font-size: 8px;
     }
-    
-
-}
-
-
-@media only screen and (max-width: 600px) {
-    body, #root {
-      background: rgba(255, 255, 255, 0.8); 
-    }
   
     .App {
       padding: 0px;
@@ -60,9 +49,6 @@
       margin-bottom: 5%; 
     }
 
-  }
-  
-  @media only screen and (max-width: 600px) {
     .dashboard .button_container {
       position: absolute;
       top: 0;
@@ -90,30 +76,15 @@
       font-size: 5px;
     }
 
-    .catchphrase {
+    .introduction {
       max-width: 200px;
       min-width: 80%;
       padding: 0px 0px;
-
+      font-size: 15px;
     }
   }
 
 
-  @media only screen and (min-width: 600px) {
-    .App, .container, h4 {
-        max-height: none;
-        max-width: none;
-    }
-
-    .catchphrase {
-      max-width: 200px;
-      min-width: 80%;
-      padding: 0px 0px;
-
-    }
-
-    
-  }
     
     @media only screen and (min-width: 1600px) {
       .App, .container, h4{

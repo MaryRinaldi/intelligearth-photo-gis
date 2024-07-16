@@ -104,6 +104,21 @@ body {
   background: none;
   border: none;
   cursor: pointer;
+  position: relative;
+}
+
+.hamburger-icon:hover::after {
+  content: 'Menu';
+  position: absolute;
+  top:40%;
+  left: 10%;
+  transform: translateX(-100%);
+  background-color: rgba(140, 157, 136, .7);
+  color: white;
+  padding: 5px 8px;
+  border-radius: 8px;
+  white-space: nowrap;
+  font-size: 30%;
 }
 
 .menu-links {
@@ -117,6 +132,7 @@ body {
   display: flex;
   flex-direction: column;
   padding: 20px;
+  z-index: 1;
 }
 
 /* UploadSection.jsx */
@@ -135,6 +151,7 @@ body {
   gap: 10px;
   top: 0;
   overflow-y: auto;
+  z-index: 1;
 }
 
 .upload-section .logo {
