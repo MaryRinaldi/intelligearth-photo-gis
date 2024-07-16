@@ -1,0 +1,123 @@
+@media (prefers-reduced-motion: no-preference) {
+    a:nth-of-type(2) .logo {
+      animation: logo-spin infinite 20s linear;
+    }
+  }
+
+
+  @media only screen and (max-height: 400px) {
+    body, #root {
+      background: rgba(255, 255, 255, 0.8); 
+    }
+  
+    .App {
+      padding: 0px;
+      max-height: 90%;
+      max-width: 90%;
+    }
+    h2 {
+      margin-top: 5%; 
+      margin-bottom: 5%; 
+    }
+  
+  }
+
+
+@media only screen and (max-width: 600px) {
+    .container {
+      padding: 0px;
+      max-height: 90%;
+      max-width: 90%;
+    }
+
+    .footer {
+      position: relative;
+      bottom: -1%;
+      left: 0;
+      width: 100%;
+      padding: 1%;
+      text-align: center;
+      font-size: 8px;
+    }
+    
+
+}
+
+
+@media only screen and (max-width: 600px) {
+    body, #root {
+      background: rgba(255, 255, 255, 0.8); 
+    }
+  
+    .App {
+      padding: 0px;
+      max-height: 90%;
+      max-width: 90%;
+    }
+  
+    h2 {
+      margin-top: 5%; 
+      margin-bottom: 5%; 
+    }
+
+  }
+  
+  @media only screen and (max-width: 600px) {
+    .dashboard .button_container {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+
+    .mapboxgl-ctrl-geocoder.mapboxgl-ctrl {
+      background-color: white;
+      border: 1px solid #ccc;
+      border-radius: 12px;
+      padding: 1px 5px;
+      font-size: 5px;
+      color: #333;
+      position: absolute;
+      top: 100%; 
+      right: 1%; 
+      max-width: 100px;
+      min-width: 50%;
+    }
+
+    .mapboxgl-ctrl-icon {
+      max-width: 90px;
+      min-width: 30%;
+      padding: 0px 0px;
+      font-size: 5px;
+    }
+
+    .catchphrase {
+      max-width: 200px;
+      min-width: 80%;
+      padding: 0px 0px;
+
+    }
+  }
+
+
+  @media only screen and (min-width: 600px) {
+    .App, .container, h4 {
+        max-height: none;
+        max-width: none;
+    }
+
+    .catchphrase {
+      max-width: 200px;
+      min-width: 80%;
+      padding: 0px 0px;
+
+    }
+
+    
+  }
+    
+    @media only screen and (min-width: 1600px) {
+      .App, .container, h4{
+          max-height: none;
+          max-width: none;
+      }
+}
