@@ -1,6 +1,6 @@
 import React from 'react';
 
-const UploadedImagePreview = ({ imageUrl }) => {
+function UploadedImagePreview ({ imageUrl }) {
   return (
     <div className="uploaded-image-container">
       <h3>Uploaded Image Preview:</h3>

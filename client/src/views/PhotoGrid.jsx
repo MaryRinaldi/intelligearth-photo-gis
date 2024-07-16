@@ -1,6 +1,9 @@
 import React from 'react';
 
-const PhotoGrid = ({ photos }) => (
+function PhotoGrid ({ photos }) {
+
+
+  return (
   <div className="photo-grid">
     {photos.map((photo) => (
       <div key={photo.id} className="photo-item">
@@ -13,6 +16,7 @@ const PhotoGrid = ({ photos }) => (
       </div>
     ))}
   </div>
-);
+  );
+}
 
 export default PhotoGrid;

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import FrontPage from '../views/FrontPage';
 import './../App.css'; 
 
 const Hamburger = () => {
@@ -15,7 +16,7 @@ const Hamburger = () => {
       </button>
       {isOpen && (
         <div className="menu-links">
-          <a className="nav-link" href="/">Home</a>
+          <a className="nav-link" href="/Frontpage">Home</a>
           <a className="nav-link" href="/Map">Map</a>
           <a className="nav-link" href="/Gallery">Gallery</a>
           <a className="nav-link" href="/Profile">Profile</a>
