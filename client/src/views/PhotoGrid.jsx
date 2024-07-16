@@ -1,11 +1,20 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 function PhotoGrid ({ photos }) {
+
+  const [galleryPhotos, setGalleryPhotos] = useState([]);
+
+  useEffect(() => {
+    fetch('/api/photos')
+      .then(response => response.json())
+      .then(data => setGalleryPhotos(data))
+      .catch(error => console.error('Error fetching gallery photos:', error));
+  }, []);
 
 
   return (
   <div className="photo-grid">
-    {photos.map((photo) => (
+    {galleryPhotos.map((photo) => (
       <div key={photo.id} className="photo-item">
         <img src={photo.url} alt={photo.title} />
         <div className="photo-details">
@@ -20,3 +29,4 @@ function PhotoGrid ({ photos }) {
 }
 
 export default PhotoGrid;
+

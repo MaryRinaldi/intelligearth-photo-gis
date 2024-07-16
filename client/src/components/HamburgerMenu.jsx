@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import FrontPage from '../views/FrontPage';
+import { Link } from 'react-router-dom';
 import './../App.css'; 
 
 const Hamburger = () => {
@@ -16,10 +16,10 @@ const Hamburger = () => {
       </button>
       {isOpen && (
         <div className="menu-links">
-          <a className="nav-link" href="/Frontpage">Home</a>
-          <a className="nav-link" href="/Map">Map</a>
-          <a className="nav-link" href="/Gallery">Gallery</a>
-          <a className="nav-link" href="/Profile">Profile</a>
+        <Link to="/" className="nav-link">Home</Link>
+        <Link to="/map" className="nav-link">Map</Link>
+        <Link to="/gallery" className="nav-link">Gallery</Link>
+        <Link to="/profile" className="nav-link">Profile</Link>
         </div>
       )}
     </div>

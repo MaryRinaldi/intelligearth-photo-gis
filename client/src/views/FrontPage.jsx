@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Header from "./Header";
 import MapComponent from '../components/MapComponent';
 import PhotoGrid from './PhotoGrid';
 import PhotoUploadForm from '../components/PhotoUploadForm';
@@ -60,7 +59,6 @@ setUploadedImageUrl(url);
     <>
     <PhotoUploadForm onPhotoUpload={handlePhotoUpload} setUploadedImageUrl={setUploadedImageUrl} />
     <div className="App">
-      <Header onPhotoUpload={handlePhotoUpload} />
       <div className='introduction'>
       <p>
 Hai mai scattato una foto incredibile e poi hai trascorso ore a cercare di ricordare dove l'hai fatta?
@@ -81,7 +79,18 @@ Spero che ti aiuti a rivivere i tuoi momenti speciali e a non perdere mai più u
 </p>
       </div>
       <MapComponent photos={mockPhotos} />
-      <PhotoGrid photos={[...uploadedPhotos, ...mockPhotos]} />
+      <div className="photo-grid">
+      {[...uploadedPhotos, ...mockPhotos].map((photo) => (
+        <div key={photo.id} className="photo-item">
+          <img src={photo.url} alt={photo.title} />
+          <div className="photo-details">
+            <h3>{photo.title}</h3>
+            <p>{photo.description}</p>
+            <p>Location: {photo.latitude}, {photo.longitude}</p>
+          </div>
+        </div>
+      ))}
+    </div>
       <div>
       {uploadedImageUrl && <UploadedImagePreview imageUrl={uploadedImageUrl} />}
     </div>

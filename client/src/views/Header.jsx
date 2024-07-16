@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import SocialMediaIcon from '../assets/Social-Media-People-Doodles.jpg';
 import Hamburger from '../components/HamburgerMenu';
 
