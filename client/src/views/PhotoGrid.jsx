@@ -13,7 +13,7 @@ function PhotoGrid ({ photos }) {
 
 
   return (
-  <div className="photo-grid">
+  <div className="photo-gallery">
     {galleryPhotos.map((photo) => (
       <div key={photo.id} className="photo-item">
         <img src={photo.url} alt={photo.title} />
