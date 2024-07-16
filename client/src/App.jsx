@@ -12,7 +12,11 @@ console.log(FrontPage);
 function App() {
   return (
     <>
-      <FrontPage />
+    <FrontPage />
+    <div className="footer">
+      <p>&copy; {new Date().getFullYear()} SNAPIFY - a 
+    <a href="https://github.com/MaryRinaldi" target="_blank">
+    </a> MaryRinaldi's <i class="fab fa-github"></i> project. All rights reserved.</p></div>
     </>
   );
 }
