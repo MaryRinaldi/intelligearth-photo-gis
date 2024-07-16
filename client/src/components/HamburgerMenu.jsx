@@ -17,7 +17,7 @@ const Hamburger = () => {
       {isOpen && (
         <div className="menu-links">
         <Link to="/" className="nav-link">Home</Link>
-        <Link to="/map" className="nav-link">Map</Link>
+        <Link to="/map" className="nav-link" >Map</Link>
         <Link to="/gallery" className="nav-link">Gallery</Link>
         <Link to="/profile" className="nav-link">Profile</Link>
         </div>

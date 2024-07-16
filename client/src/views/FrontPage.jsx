@@ -1,30 +1,10 @@
 import React, { useState } from 'react';
 import MapComponent from '../components/MapComponent';
-import PhotoGrid from './PhotoGrid';
 import PhotoUploadForm from '../components/PhotoUploadForm';
 import UploadedImagePreview from './UploadedImagePreview';
 import '../App.css'
 
-const mockPhotos = [
-  {
-    id: 1,
-    title: 'Photo 1',
-    description: 'Description 1',
-    latitude: 41.9028,
-    longitude: 12.4964,
-    url: 'https://images.unsplash.com/photo-1525874684015-58379d421a52?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8cm9tYXxlbnwwfHwwfHx8MA%3D%3D'
-  },
-  {
-    id: 2,
-    title: 'Photo 2',
-    description: 'Description 2',
-    latitude: 40.9038,
-    longitude: 12.4965,
-    url: 'https://images.unsplash.com/photo-1542820229-081e0c12af0b?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHJvbWF8ZW58MHx8MHx8fDA%3D%3D'
-  },
-];
-
-function FrontPage () {
+function FrontPage ({photos, mockPhotos}) {
 
 const [uploadedPhotos, setUploadedPhotos] = useState([]);
 const [uploadedImageUrl, setUploadedImageUrl] = useState('');
