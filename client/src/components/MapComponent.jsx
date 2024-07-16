@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 
 mapboxgl.accessToken ='pk.eyJ1IjoibWFyeXJpbmFsZGkiLCJhIjoiY2x5azZyOWVrMGNoMzJqcjVpZmx6enp0cCJ9.lXQPwhWhUJw8deFEyDQeug'
@@ -7,6 +7,7 @@ mapboxgl.accessToken ='pk.eyJ1IjoibWFyeXJpbmFsZGkiLCJhIjoiY2x5azZyOWVrMGNoMzJqcj
 function MapComponent({ photos }) {
   const mapContainerRef = useRef(null);
   const mapRef = useRef(null);
+  const markerRef = useRef(new Set());
 
   useEffect(() => {
     if (!mapRef.current) {
@@ -30,10 +31,7 @@ function MapComponent({ photos }) {
   useEffect(() => {
     if (!mapRef.current || !photos) return;
 
-    mapRef.current.on('load', () => {
-      addMarkersToMap();
-    });
-
+    mapRef.current.on('load', addMarkersToMap);
     mapRef.current.on('click', handleMapClick);
 
     return () => {
@@ -46,7 +44,7 @@ function MapComponent({ photos }) {
   const handleMapClick = (e) => {
     const { lng, lat } = e.lngLat;
 
-    console.log(`Latitude: ${lat}, Longitude: ${lng}`);
+    console.log(`Latitude: ${lat}, Longitude: ${lng}`); /*check for functionality*/
 
     const markerEl = document.createElement('div');
     markerEl.className = 'marker';
@@ -61,6 +59,7 @@ function MapComponent({ photos }) {
       .addTo(mapRef.current);
 
     const photoData = {
+      id: new Date().getTime(),
       title: 'Photo Title',
       description: 'Photo Description',
       latitude: lat,
@@ -68,7 +67,7 @@ function MapComponent({ photos }) {
       url: 'https://media.istockphoto.com/id/1397597374/it/foto/roma-al-tramonto.webp?b=1&s=170667a&w=0&k=20&c=jy49eiUjC0g_Px-4w96xz-R_0Hh5-841EAR1_LkUnL0='
     };
 
-    console.log('Photo data to be sent to the server:', photoData);
+    console.log('Photo data to be sent to the server:', photoData); /* test errors */
     fetch('/api/photos', {
       method: 'POST',
       headers: {
@@ -79,14 +78,18 @@ function MapComponent({ photos }) {
     .then(response => response.json())
     .then(data => console.log('Success:', data))
     .catch((error) => console.error('Error:', error));
+
+    if (mapRef.current) {
+      mapRef.current.setCenter([lng, lat]);
+      }
   };
 
   const addMarkersToMap = () => {
     if (!mapRef.current || !photos) return;
 
-    document.querySelectorAll('.marker').forEach(marker => marker.remove());
+   photos.forEach(photo => {
+    if (markerRef.current.has(photo.id)) return; /* go to next Id */
 
-    photos.forEach(photo => {
       const el = document.createElement('div');
       el.className = 'marker';
       el.style.backgroundImage = `url(${photo.url})`;
@@ -102,6 +105,7 @@ function MapComponent({ photos }) {
         new mapboxgl.Marker(el)
           .setLngLat([photo.longitude, photo.latitude])
           .addTo(mapRef.current);
+      markerRef.current.add(photo.id);
       };
       image.onerror = (error) => {
         console.error('Error loading image:', error);
