@@ -289,24 +289,18 @@ body::-webkit-scrollbar {
 }
 
 .photo-item {
+  padding: 10px;
   border-radius: 8px;
   overflow: hidden;
-  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+  background-color: #f0f0f0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .photo-item img {
-  min-width: 100%;
   min-height: 60%;
   max-width: 500px;
   max-height: 500px;
   display: block;
-}
-
-.photo-details {
-  padding: 10px;
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius:  8px;
-  background-color: #f0f0f0;
 }
 
 .photo-details h3 {

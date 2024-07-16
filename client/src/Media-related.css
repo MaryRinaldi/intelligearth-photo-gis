@@ -5,9 +5,9 @@
   }
 
 
-  @media only screen and (max-height: 700px) {
+  @media only screen and (max-height: 600px) {
  
-    .App {
+    .App, #root {
       padding: 0px;
       max-height: 90%;
       max-width: 90%;
@@ -20,7 +20,8 @@
   }
 
 
-@media only screen and (max-width: 900px) {
+@media only screen and (max-width: 600px) {
+  
     .upload-section {
       padding: 0px;
       min-width: 70%;
@@ -38,7 +39,7 @@
       font-size: 8px;
     }
   
-    .App {
+    .App, #root {
       padding: 0px;
       max-height: 90%;
       max-width: 90%;
