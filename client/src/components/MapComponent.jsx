@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 import mapboxgl from 'mapbox-gl';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoibWFyeXJpbmFsZGkiLCJhIjoiY2x5azZyOWVrMGNoMzJqcjVpZmx6enp0cCJ9.lXQPwhWhUJw8deFEyDQeug';
@@ -6,6 +7,7 @@ mapboxgl.accessToken = 'pk.eyJ1IjoibWFyeXJpbmFsZGkiLCJhIjoiY2x5azZyOWVrMGNoMzJqc
 function MapComponent({ photos, lastUploadedUrl, setLastUploadedUrl }) {
   const mapContainerRef = useRef(null);
   const mapRef = useRef(null);
+  const location = useLocation();
 
   useEffect(() => {
     if (!mapRef.current) {
@@ -120,10 +122,13 @@ function MapComponent({ photos, lastUploadedUrl, setLastUploadedUrl }) {
   };
 
   return (
-    <div className="map-component">
-      Aggiorna la mappa se ancora non visualizzi le tue foto.
+    <>
+    <div className="map-component">{location.pathname === '/map' && (
+        <p>  Aggiorna la mappa se ancora non visualizzi le tue foto.</p>
+      )}
       <div ref={mapContainerRef} id="map" style={{ width: '100%', height: '400px' }}></div>
     </div>
+    </>
   );
 }
 

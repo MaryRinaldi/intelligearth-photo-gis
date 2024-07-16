@@ -47,16 +47,18 @@ Bene, è arrivato il momento di porre fine alla confusione! <br></br> Con la mia
 Usa SNAPIFY per caricare sull'app le tue foto. Seleziona i parametri (titolo, descrizione, latitudine e longitudine), poi immetti l'URL dell'immagine che preferisci. Troverai le tue foto caricate sulla mappa (Map) e sulla galleria (Gallery) accessibili tramite il menu in alto a destra.
 <br></br>
 <br></br>
+{/* Clicca sulla mappa per impostare le tue foto alla posizione (longitude, latitude) che preferisci. Ti basterà caricare la foto dopo aver cliccato sulla mappa!
 <br></br>
-Altrimenti, usa il geolocalizzatore per salvare la foto alla tua posizione!
+Altrimenti, usa il geolocalizzatore per salvare la foto alla tua posizione! */}
 <br></br>
 Desideri visualizzare tutte le tue foto in un colpo d'occhio? Basta un clic su "Gallery" e avrai accesso a una galleria completa dei tuoi ricordi.
 <br></br>
-Stai cercando quella foto specifica del barbecue del 2010? Inserisci l'ID univoco nella barra di ricerca situata nella galleria e la troverai in un attimo.
+Stai cercando quella foto specifica del barbecue del 2010? Inserisci il titolo della foto nella barra di ricerca situata nella galleria e la troverai in un attimo.
 <br></br>
 Esplora la sezione "Profile" per scoprire i luoghi che hai visitato e dove hai localizzato le tue foto.
 <br></br>
-E se preferisci inserire un URL anziché caricare direttamente l'immagine, l'app gestisce tutto senza problemi; perché, diciamocelo, il Wi-Fi può essere complicato a volte.
+E se preferisci  caricare direttamente l'immagine anziché inserire un URL, l'app gestisce tutto senza problemi; perché, diciamocelo, il Wi-Fi può essere complicato a volte.
+<br></br>
 <br></br>
 Grazie per aver scelto la mia app!
 <br></br>
