@@ -16,6 +16,7 @@ function MapComponent({ photos }) {
         center: [12.4964, 41.9028],
         zoom: 12
       });
+      mapRef.current.addControl(new mapboxgl.NavigationControl(), 'top-right');
     }
 
     return () => {
