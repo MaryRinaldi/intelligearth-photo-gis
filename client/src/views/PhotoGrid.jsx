@@ -13,7 +13,9 @@ function PhotoGrid ({ photos }) {
 
 
   return (
-  <div className="photo-gallery">
+  <>
+  <h3 style={{ textAlign: 'center' }}>Visualizza qui le tue foto caricate</h3>
+   <div className="photo-gallery">
     {galleryPhotos.map((photo) => (
       <div key={photo.id} className="photo-item">
         <img src={photo.url} alt={photo.title} />
@@ -25,6 +27,8 @@ function PhotoGrid ({ photos }) {
       </div>
     ))}
   </div>
+      </>
+
   );
 }
 

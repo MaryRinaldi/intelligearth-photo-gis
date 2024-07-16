@@ -1,8 +1,13 @@
 body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   margin: 0;
-    padding: 0;
+  padding: 0;
   }
+
+
+body::-webkit-scrollbar {
+  display: none;
+}
   
   :root {
     min-height: 300vh;
@@ -17,10 +22,11 @@ body {
   --color-background-light: #dcdcdc;
   }
 
-  .App {
-    margin-left: 320px; 
-    padding: 1%;
-  }
+
+.Frontpage {
+  margin-left: 320px; 
+  padding: 1%;
+}
 
   h1, h2, h3, h4, h5, h6 {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -138,7 +144,7 @@ body {
 /* UploadSection.jsx */
 
 .upload-section {
-  width: 300px; 
+  width: 300px;
   height: 100vh; 
   position:fixed; 
   display: flex;
@@ -158,6 +164,7 @@ body {
   display: flex;
   align-items: center;
   margin: 2%;
+
 }
 
 .upload-section .logo .logo-icon {
@@ -284,18 +291,21 @@ body {
 .photo-item {
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
 }
 
 .photo-item img {
-  width: 100%;
-  height: auto;
+  min-width: 100%;
+  min-height: 60%;
+  max-width: 500px;
+  max-height: 500px;
   display: block;
-  border-radius: 8px 8px 0 0;
 }
 
 .photo-details {
   padding: 10px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius:  8px;
   background-color: #f0f0f0;
 }
 

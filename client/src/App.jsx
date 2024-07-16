@@ -37,13 +37,20 @@ function App() {
     setUploadedImageUrl(url);
   };
 
+  useEffect(() => {
+    fetch('/api/photos')
+      .then(response => response.json())
+      .then(data => setUploadedPhotos(data))
+      .catch(error => console.error('Error fetching uploaded photos:', error));
+  }, []);
+
   return (
     <>
     <Header />
     <Routes>
-      <Route path="/" element={<FrontPage  mockPhotos={mockPhotos}  photos={mockPhotos} />}/>
-      <Route path="/gallery" element={<PhotoGrid/>}/>
-      <Route path="/map" element={<MapComponent  photos={mockPhotos} />}/>
+    <Route path="/" element={<FrontPage mockPhotos={mockPhotos} uploadedPhotos={uploadedPhotos} />} />
+        <Route path="/gallery" element={<PhotoGrid photos={uploadedPhotos} />} />
+        <Route path="/map" element={<MapComponent photos={[...mockPhotos, ...uploadedPhotos]} />} />
       {/* <Route path="/profilepage" element={<Private> <ProfilePage/> </Private>} /> */}
     </Routes>
     

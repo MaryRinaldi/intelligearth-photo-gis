@@ -38,12 +38,16 @@ setUploadedImageUrl(url);
   return (
     <>
     <PhotoUploadForm onPhotoUpload={handlePhotoUpload} setUploadedImageUrl={setUploadedImageUrl} />
-    <div className="App">
+    <div className="Frontpage">
       <div className='introduction'>
       <p>
 Hai mai scattato una foto incredibile e poi hai trascorso ore a cercare di ricordare dove l'hai fatta?
 <br></br>
 Bene, è arrivato il momento di porre fine alla confusione! <br></br> Con la mia app, puoi caricare le tue foto, aggiungere titoli e descrizioni memorabili, e salvare con precisione la latitudine e la longitudine per non dimenticare mai il luogo esatto del tuo momento speciale.
+<br></br>
+Clicca sulla mappa per impostare le tue foto alla posizione (longitude, latitude) che preferisci. Ti basterà caricare la foto dopo aver cliccato sulla mappa!
+<br></br>
+Altrimenti, usa il geolocalizzatore per salvare la foto alla tua posizione!
 <br></br>
 Desideri visualizzare tutte le tue foto in un colpo d'occhio? Basta un clic su "Gallery" e avrai accesso a una galleria completa dei tuoi ricordi.
 <br></br>
