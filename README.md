@@ -29,9 +29,11 @@ Endpoint:
 
 ```
 POST /api/photos/upload```
+
 Uploads a photo along with metadata (title, description, location coordinates).
 
 Request Body:
+
 ```
 {
   "title": "Photo Title",
@@ -39,9 +41,11 @@ Request Body:
   "latitude": 41.9028,
   "longitude": 12.4964,
   "file": "Base64 encoded image data"
-}```
+}
+```
 
 Response:
+
 ```
 {
   "id": 1,
@@ -50,15 +54,19 @@ Response:
   "latitude": 41.9028,
   "longitude": 12.4964,
   "url": "https://example.com/photos/1"
-}```
+}
+```
 
 - Get All Photos
 Endpoint:
+
 ```
 GET /api/photos```
+
 Retrieves a list of all uploaded photos.
 
 Response:
+
 ```
 [
   {
@@ -81,11 +89,14 @@ Response:
 
 - Get Photo by ID
 Endpoint:
+
 ```
 GET /api/photos/:id```
+
 Retrieves a single photo by its ID parameter.
 
 Response:
+
 ```{
   "id": 1,
   "title": "Photo Title",
