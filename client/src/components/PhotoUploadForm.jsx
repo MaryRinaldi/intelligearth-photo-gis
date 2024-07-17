@@ -1,50 +1,64 @@
 import React, { useState } from 'react';
 import LogoIcon from '../assets/Logo.png';
 
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // Limita a 5MB per esempio
+
 const PhotoUploadForm = ({ onPhotoUpload, setUploadedImageUrl }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
   const [url, setUrl] = useState('');
-  const [uploadedPhotoUrl, setUploadedPhotoUrl] = useState('');
+  const [selectedFiles, setSelectedFiles] = useState([]);
 
   const handleFileChange = (e) => {
-    const selectedFiles = Array.from(e.target.files).map(file => ({
-      id: Date.now(), // Generate unique ID for each file
-      file: file
-    }));
-    setFiles(selectedFiles);
+    const files = Array.from(e.target.files);
+
+    const validFiles = files.filter(file => file.size <= MAX_FILE_SIZE);
+
+    if (validFiles.length !== files.length) {
+      alert('Select a picture MAX. 5MB.');
+    }
+
+    const fileReaders = validFiles.map(file => {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve({ id: Date.now(), file: reader.result });
+        reader.onerror = error => reject(error);
+      });
+    });
+
+    Promise.all(fileReaders)
+      .then(files => setSelectedFiles(files))
+      .catch(error => console.error('Error reading files:', error));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-
-    // Converti latitude e longitude in numeri
     const numLatitude = Number(latitude);
     const numLongitude = Number(longitude);
 
-    // Verifica che siano numeri validi
     if (isNaN(numLatitude) || isNaN(numLongitude)) {
       console.error('Invalid latitude or longitude:', { latitude, longitude });
-      alert('Lat e Long must be valid numbers!')
+      alert('Lat e Long must be valid numbers!');
       return;
     }
 
-    // Verifica che i campi obbligatori siano presenti
-    if (!title || !description || !url) {
+    if (!title || !description || (!url && selectedFiles.length === 0)) {
       console.error('Missing required fields:', { title, description, latitude, longitude, url });
-      alert('All fields are required!')
+      alert('All fields are required!');
       return;
     }
 
     const requestData = {
-      title: title,
-      description: description,
+      title,
+      description,
       latitude: numLatitude,
       longitude: numLongitude,
-      url: url,
+      url,
+      files: selectedFiles.length > 0 ? selectedFiles.map(file => file.file) : null,
     };
 
     try {
@@ -55,39 +69,31 @@ const PhotoUploadForm = ({ onPhotoUpload, setUploadedImageUrl }) => {
         },
         body: JSON.stringify(requestData),
       });
-      
+
       if (response.ok) {
         const responseData = await response.json();
         console.log('Response Data:', responseData);
-        
-        // Verifica che la risposta contenga sia 'id' che 'values'
-        if (responseData.id && responseData.values && responseData.values.length > 4) {
-          const uploadedUrl = responseData.values[4]; // Assume che 'url' sia il quinto elemento in 'values'
-          
-          if (uploadedUrl) {
-            console.log('Photo URL:', uploadedUrl);
-            setUploadedImageUrl(uploadedUrl); // Imposta l'URL dell'immagine caricata in App.jsx
-            onPhotoUpload(uploadedUrl);
-            
-            // Reimposta i campi del form dopo il caricamento
-            setTitle('');
-            setDescription('');
-            setLatitude('');
-            setLongitude('');
-            setUrl('');
-          } else {
-            console.error('Photo URL not found in response data');
-          }
+
+        if (responseData.url) {
+          setUploadedImageUrl(responseData.url);
+          onPhotoUpload(responseData.url);
+
+          setTitle('');
+          setDescription('');
+          setLatitude('');
+          setLongitude('');
+          setUrl('');
+          setSelectedFiles([]);
         } else {
-          console.error('Unexpected response structure:', responseData);
+          console.error('Photo URL not found in response data');
         }
       } else {
         console.error('Failed to upload photo');
-        alert('Failed to upload photo!')
+        alert('Failed to upload photo!');
       }
     } catch (error) {
       console.error('Error uploading photo:', error);
-      alert('Error uploading photo!')
+      alert('Error uploading photo!');
     }
   };
 
@@ -98,9 +104,9 @@ const PhotoUploadForm = ({ onPhotoUpload, setUploadedImageUrl }) => {
         <h2>SNAPIFY</h2>
       </div>
       <h2 className="upload-title">Upload your photo here</h2>
-      <p className="upload-info">PNG, JPG, JPEG any size</p>
+      <p className="upload-info">PNG, JPG, JPEG any size (max 5MB)</p>
       <form onSubmit={handleSubmit} className="upload-form">
-        <input type="file" onChange={handleFileChange} multiple />
+        {/* <input type="file" onChange={handleFileChange} multiple /> */}
         <label htmlFor="title">Title:</label>
         <input type="text" id="title" value={title} onChange={(e) => setTitle(e.target.value)} />
         <label htmlFor="description">Description:</label>

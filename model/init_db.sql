@@ -8,6 +8,7 @@ CREATE TABLE pic_table (
     description TEXT,
     latitude DECIMAL(10, 8) NOT NULL,
     longitude DECIMAL(11, 8) NOT NULL,
-    url VARCHAR(255),
+    url VARCHAR(250),
+    file BLOB,
     PRIMARY KEY (id)
 );
