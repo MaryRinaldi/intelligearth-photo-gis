@@ -1,14 +1,11 @@
 {
   "name": "client",
-  "private": false,
+  "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "render-postbuild": "npm install --prefix client --production=false && cd /opt/render/project/src/client && npm run build",
-    "start": "react-scripts start",
     "dev": "vite",
     "build": "vite build",
-    "deploy": "npm run build && gh-pages -d dist",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "test": "jest --config=jest.config.cjs"
@@ -17,7 +14,11 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router": "^6.24.1",
-    "react-router-dom": "^6.24.1"
+    "react-router-dom": "^6.24.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "node": "^18.20.1",
+    "nodemon": "^3.1.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.4.6",
@@ -31,7 +32,7 @@
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-refresh": "^0.4.7",
     "jest": "^29.7.0",
-    "vite": "^5.3.1",
+    "vite": "^5.3.3",
     "react-scripts": "^5.0.0"
   }
 }

@@ -1,13 +1,11 @@
 {
   "name": "intelligearth-photo-gis",
   "version": "0.0.0",
-  "private": false,
+  "private": true,
   "scripts": {
-    "render-postbuild": "npm install --prefix client --production=false && cd /opt/render/project/src/client && npm run build",
-    "start": "nodemon ./bin/www",
-    "migrate": "node model/database.js",
-    "test": "jest --config=jest.config.cjs",
-    "build": "npm install && npm install --prefix && npm run build --prefix client"
+    "start": "nodemon bin/www",
+    "migrate": "node api/model/database.js",
+    "test": "jest --config=jest.config.cjs"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
@@ -16,6 +14,7 @@
     "debug": "~2.6.9",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "express-jwt": "^8.4.1",
     "fetch": "^1.1.0",
     "gh-pages": "^6.1.1",
     "jsonwebtoken": "^9.0.2",
@@ -27,7 +26,8 @@
     "nodemon": "^3.1.0",
     "path": "^0.12.7",
     "react-router": "^6.24.1",
-    "react-router-dom": "^6.24.1"
+    "react-router-dom": "^6.24.1",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.24.8",
