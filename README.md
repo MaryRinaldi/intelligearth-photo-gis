@@ -45,30 +45,28 @@ Request Body:
 
 Response:
 
-
-```{
+```
+{
   "id": 1,
   "title": "Photo Title",
   "description": "Photo Description",
   "latitude": 41.9028,
   "longitude": 12.4964,
   "url": "https://example.com/photos/1"
-}```
-
+}
+```
 
 * Get All Photos
 Endpoint:
 
-
 ```GET /api/photos```
-
 
 Retrieves a list of all uploaded photos.
 
 Response:
 
-
-```[
+```
+[
   {
     "id": 1,
     "title": "Photo Title",
@@ -91,14 +89,14 @@ Response:
 * Get Photo by ID
 Endpoint:
 
-```GET /api/photos/:id
-```
+```GET /api/photos/:id```
 
 Retrieves a single photo by its ID parameter.
 
 Response:
 
-```{
+```
+{
   "id": 1,
   "title": "Photo Title",
   "description": "Photo Description",
