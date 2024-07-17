@@ -41,7 +41,9 @@ Request Body:
   "file": "Base64 encoded image data"
 }```
 
+
 Response:
+
 
 ```{
   "id": 1,
@@ -53,7 +55,7 @@ Response:
 }```
 
 
-- Get All Photos
+* Get All Photos
 Endpoint:
 
 
