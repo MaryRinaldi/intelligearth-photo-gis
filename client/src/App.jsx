@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react'
-import { Routes, Route, Link } from "react-router-dom";
-import Header from './views/Header';
-import MapComponent from './components/MapComponent';
-import PhotoGrid from './views/PhotoGrid';
-import PhotoUploadForm from './components/PhotoUploadForm';
-import FrontPage from './views/FrontPage';
-import './App.css';
-import './Media-related.css';
+import React, { useState, useEffect } from 'react';
+import { Routes, Route } from "react-router-dom";
+import Header from './views/Header'; // Importing header component
+import MapComponent from './components/MapComponent'; // Importing map component
+import PhotoGrid from './views/PhotoGrid'; // Importing photo grid view
+import PhotoUploadForm from './components/PhotoUploadForm'; // Importing photo upload form component
+import FrontPage from './views/FrontPage'; // Importing front page view
+import './App.css'; // Importing main CSS styles
+import './Media-related.css'; // Importing media-related CSS styles
 
 const mockPhotos = [
   {
@@ -28,42 +28,45 @@ const mockPhotos = [
 ];
 
 function App() {
-  const [uploadedPhotos, setUploadedPhotos] = useState([]);
+  const [uploadedPhotos, setUploadedPhotos] = useState([]); 
   const [uploadedImageUrl, setUploadedImageUrl] = useState('');
-  const [lastUploadedUrl, setLastUploadedUrl] = useState('');
+  const [lastUploadedUrl, setLastUploadedUrl] = useState(''); 
 
+  // Handler for photo upload
   const handlePhotoUpload = (url) => {
     setLastUploadedUrl(url);
     setUploadedPhotos([...uploadedPhotos, { id: Date.now(), title:'Photo title', description:'Photo description', latitude: 0, longitude: 0, url}]);
   };
 
+  // Fetch uploaded photos from server on component mount
   useEffect(() => {
     fetch('/api/photos')
       .then(response => response.json())
       .then(data => {
         setUploadedPhotos(data);
-      if (data.length > 0) {
-        setLastUploadedUrl(data[data.length - 1].url); /* get last URL */
-      }
+        if (data.length > 0) {
+          setLastUploadedUrl(data[data.length - 1].url); // Set last uploaded URL
+        }
       })
       .catch(error => console.error('Error fetching uploaded photos:', error));
   }, []);
 
   return (
     <>
-    <Header />
-    <Routes>
-    <Route path="/" element={<FrontPage mockPhotos={mockPhotos} photos={[...mockPhotos, ...uploadedPhotos]} uploadedPhotos={uploadedPhotos} lastUploadedUrl={lastUploadedUrl} />} />
+      <Header /> 
+      <Routes>
+        {/* Routes for different views */}
+        <Route path="/" element={<FrontPage mockPhotos={mockPhotos} photos={[...mockPhotos, ...uploadedPhotos]} uploadedPhotos={uploadedPhotos} lastUploadedUrl={lastUploadedUrl} />} />
         <Route path="/gallery" element={<PhotoGrid photos={uploadedPhotos} />} />
-        <Route path="/map" element={<MapComponent photos={uploadedPhotos} lastUploadedUrl={lastUploadedUrl} setLastUploadedUrl={setLastUploadedUrl}  />} />
-      {/* <Route path="/profilepage" element={<Private> <ProfilePage/> </Private>} /> */}
-      <Route path='/photoupload' element={<PhotoUploadForm onPhotoUpload={handlePhotoUpload} />} />
-    </Routes>
-    
-    <div className="footer">
-      <p>&copy; {new Date().getFullYear()} SNAPIFY - a 
-    <a href="https://github.com/MaryRinaldi" target="_blank">
-    </a> MaryRinaldi's <i className="fab fa-github"></i> project. All rights reserved.</p></div>
+        <Route path="/map" element={<MapComponent photos={uploadedPhotos} lastUploadedUrl={lastUploadedUrl} setLastUploadedUrl={setLastUploadedUrl} />} />
+        {/* <Route path="/profilepage" element={ <ProfilePage/>} /> */}
+        <Route path='/photoupload' element={<PhotoUploadForm onPhotoUpload={handlePhotoUpload} />} />
+      </Routes>
+
+      <div className="footer">
+        <p>&copy; {new Date().getFullYear()} SNAPIFY - a 
+          <a href="https://github.com/MaryRinaldi" target="_blank"> MaryRinaldi's <i className="fab fa-github"></i> project.</a> All rights reserved.</p>
+      </div>
     </>
   );
 }

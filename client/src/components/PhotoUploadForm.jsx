@@ -1,25 +1,28 @@
 import React, { useState } from 'react';
-import LogoIcon from '../assets/Logo.png';
+import LogoIcon from '../assets/Logo.png'; 
 
-const MAX_FILE_SIZE = 5 * 1024 * 1024; // Limita a 5MB per esempio
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // Maximum file size limit set to 5MB
 
 const PhotoUploadForm = ({ onPhotoUpload, setUploadedImageUrl }) => {
-  const [title, setTitle] = useState('');
+  const [title, setTitle] = useState(''); 
   const [description, setDescription] = useState('');
   const [latitude, setLatitude] = useState('');
-  const [longitude, setLongitude] = useState('');
-  const [url, setUrl] = useState('');
-  const [selectedFiles, setSelectedFiles] = useState([]);
+  const [longitude, setLongitude] = useState(''); 
+  const [url, setUrl] = useState(''); 
+  const [selectedFiles, setSelectedFiles] = useState([]); s
 
+  // Handler for file selection
   const handleFileChange = (e) => {
     const files = Array.from(e.target.files);
 
+    // Filter files exceeding max size
     const validFiles = files.filter(file => file.size <= MAX_FILE_SIZE);
 
     if (validFiles.length !== files.length) {
       alert('Select a picture MAX. 5MB.');
     }
 
+    // Reading valid files as data URLs
     const fileReaders = validFiles.map(file => {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -34,24 +37,28 @@ const PhotoUploadForm = ({ onPhotoUpload, setUploadedImageUrl }) => {
       .catch(error => console.error('Error reading files:', error));
   };
 
+  // Form submit handler
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const numLatitude = Number(latitude);
     const numLongitude = Number(longitude);
 
+    // Validation for latitude and longitude
     if (isNaN(numLatitude) || isNaN(numLongitude)) {
       console.error('Invalid latitude or longitude:', { latitude, longitude });
       alert('Lat e Long must be valid numbers!');
       return;
     }
 
+    // Validation for required fields
     if (!title || !description || (!url && selectedFiles.length === 0)) {
       console.error('Missing required fields:', { title, description, latitude, longitude, url });
       alert('All fields are required!');
       return;
     }
 
+    // Constructing request data object
     const requestData = {
       title,
       description,
@@ -62,6 +69,7 @@ const PhotoUploadForm = ({ onPhotoUpload, setUploadedImageUrl }) => {
     };
 
     try {
+      // Sending POST request to upload photo data
       const response = await fetch('http://localhost:5000/api/photos', {
         method: 'POST',
         headers: {
@@ -74,10 +82,12 @@ const PhotoUploadForm = ({ onPhotoUpload, setUploadedImageUrl }) => {
         const responseData = await response.json();
         console.log('Response Data:', responseData);
 
+        // Handling successful upload response
         if (responseData.url) {
           setUploadedImageUrl(responseData.url);
           onPhotoUpload(responseData.url);
 
+          // Resetting form fields and selected files
           setTitle('');
           setDescription('');
           setLatitude('');
@@ -97,16 +107,17 @@ const PhotoUploadForm = ({ onPhotoUpload, setUploadedImageUrl }) => {
     }
   };
 
+  // JSX rendering for the PhotoUploadForm
   return (
     <div className="upload-section">
       <div className="logo">
-        <img src={LogoIcon} alt="Logo Icon" className="logo-icon" /> 
+        <img src={LogoIcon} alt="Logo Icon" className="logo-icon" />
         <h2>SNAPIFY</h2>
       </div>
       <h2 className="upload-title">Upload your photo here</h2>
       <p className="upload-info">PNG, JPG, JPEG any size (max 5MB)</p>
       <form onSubmit={handleSubmit} className="upload-form">
-        {/* <input type="file" onChange={handleFileChange} multiple /> */}
+        {/* Input fields for photo details */}
         <label htmlFor="title">Title:</label>
         <input type="text" id="title" value={title} onChange={(e) => setTitle(e.target.value)} />
         <label htmlFor="description">Description:</label>
@@ -117,6 +128,9 @@ const PhotoUploadForm = ({ onPhotoUpload, setUploadedImageUrl }) => {
         <input type="text" id="longitude" value={longitude} onChange={(e) => setLongitude(e.target.value)} />
         <label htmlFor="url">Insert your URL here:</label>
         <input type="text" id="url" value={url} onChange={(e) => setUrl(e.target.value)} />
+        {/* File input field */}
+        <input type="file" onChange={handleFileChange} multiple />
+        {/* Submit button */}
         <button type="submit" className="upload-button">Upload</button>
       </form>
     </div>

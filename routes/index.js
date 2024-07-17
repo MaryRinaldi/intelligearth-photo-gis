@@ -1,19 +1,20 @@
-var express = require('express');
+var express = require('express'); 
 var router = express.Router();
-var db = require("../model/helper");
+var db = require("../model/helper"); 
 require("dotenv").config();
-const { decodeBase64Image } = require('./utils')
+const { decodeBase64Image } = require('./utils'); 
 
-let processingRequest = false;
+let processingRequest = false; // Flag to prevent concurrent processing of requests
 
 /* POST request for saving data */
 router.post('/photos', async (req, res) => {
   if (processingRequest) {
-    return res.status(400).json({ error: "Duplicate request" });
+    return res.status(400).json({ error: "Duplicate request" }); // Return error if request is already being processed
   }
 
   const { title, description, latitude, longitude, url, files } = req.body;
 
+  // Validate required fields
   if (!title || !description || !latitude || !longitude || (!url && (!files || files.length === 0))) {
     console.log('Missing required fields:', { title, description, latitude, longitude, url });
     return res.status(400).json({ error: "Missing fields." });
@@ -22,45 +23,52 @@ router.post('/photos', async (req, res) => {
   const lat = Number(latitude);
   const lng = Number(longitude);
 
+  // Validate latitude and longitude
   if (isNaN(lat) || isNaN(lng)) {
     console.log('Invalid latitude or longitude:', { latitude, longitude });
     return res.status(400).json({ error: "Latitude and longitude must be numbers." });
   }
 
   try {
-    processingRequest = true;
+    processingRequest = true; // Set processing flag to true
+
     let uploadedUrl = url;
+
     if (files && files.length > 0) {
-        // Handle base64 encoded images
-        const fileInsertPromises = files.map(async (file) => {
-      const decodedImage = decodeBase64Image(file);
-  const query = 'INSERT INTO pic_table (title, description, latitude, longitude, file) VALUES (?, ?, ?, ?, ?)';
-  const values = [title, description, lat, lng, decodedImage.data];
-  const result = await db.executeQuery(query, values);
-  return result.insertId;
-        });
-    const insertResults = await Promise.all(fileInsertPromises);
-    const lastInsertId = insertResults[insertResults.length -1];
-  if (lastInsertId) {
-    const getUrlQuery = 'SELECT url FROM pic_table WHERE id = ?';
-    const urlResult = await db.executeQuery(getUrlQuery, [lastInsertId]);
-    uploadedUrl = urlResult[0].url;
-  } else {
-    console.error('Failed to insert image data into database');
-    return res.status(500).json({ error: "Failed to insert image data into database" });
-  }
-} else {
-  const query = 'INSERT INTO pic_table (title, description, latitude, longitude, url) VALUES (?, ?, ?, ?, ?)';
-  const values = [title, description, lat, lng, url];
-    const result = await db.executeQuery(query, values);
-    uploadedUrl = url;
-}
-    res.json({ url: uploadedUrl});
+      // Handle base64 encoded images
+      const fileInsertPromises = files.map(async (file) => {
+        const decodedImage = decodeBase64Image(file);
+        const query = 'INSERT INTO pic_table (title, description, latitude, longitude, file) VALUES (?, ?, ?, ?, ?)';
+        const values = [title, description, lat, lng, decodedImage.data];
+        const result = await db.executeQuery(query, values);
+        return result.insertId;
+      });
+
+      const insertResults = await Promise.all(fileInsertPromises);
+      const lastInsertId = insertResults[insertResults.length - 1];
+
+      if (lastInsertId) {
+        const getUrlQuery = 'SELECT url FROM pic_table WHERE id = ?';
+        const urlResult = await db.executeQuery(getUrlQuery, [lastInsertId]);
+        uploadedUrl = urlResult[0].url;
+      } else {
+        console.error('Failed to insert image data into database');
+        return res.status(500).json({ error: "Failed to insert image data into database" });
+      }
+    } else {
+      // Handle regular URL upload
+      const query = 'INSERT INTO pic_table (title, description, latitude, longitude, url) VALUES (?, ?, ?, ?, ?)';
+      const values = [title, description, lat, lng, url];
+      const result = await db.executeQuery(query, values);
+      uploadedUrl = url;
+    }
+
+    res.json({ url: uploadedUrl }); // Respond with uploaded URL
   } catch (error) {
     console.error('Error inserting data into the database:', error);
     res.status(500).json({ error: "Error inserting data into the database" });
   } finally {
-    processingRequest = false; // Ensure processingRequest is always reset to false
+    processingRequest = false; // Reset processing flag to false after request processing
   }
 });
 
@@ -93,4 +101,4 @@ router.get('/photos/:id', function(req, res, next) {
     });
 });
 
-module.exports = router;
+module.exports = router; // Exporting the router with defined endpoints
