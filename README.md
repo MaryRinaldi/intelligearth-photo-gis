@@ -14,11 +14,88 @@ Intelligearth Photo GIS aims to provide a platform where users can upload photos
 * Mapbox: Interactive mapping and marker display.
 * Vanilla CSS: Optional for styling, provides utility-first CSS.
 
+I chose to use Mapbox for mapping due to its extensive features and customization options, which enhance the user experience.
+
 ### Backend
 
 * Node.js with Express: Server-side framework for building RESTful APIs.
 * MySQL: Database for storing photo metadata and file locations.
 * Multer: Middleware for handling file uploads.
+
+### API Documentation
+
+* Upload a Photo
+Endpoint:
+
+```
+POST /api/photos/upload```
+Uploads a photo along with metadata (title, description, location coordinates).
+
+Request Body:
+```
+{
+  "title": "Photo Title",
+  "description": "Photo Description",
+  "latitude": 41.9028,
+  "longitude": 12.4964,
+  "file": "Base64 encoded image data"
+}```
+
+Response:
+```
+{
+  "id": 1,
+  "title": "Photo Title",
+  "description": "Photo Description",
+  "latitude": 41.9028,
+  "longitude": 12.4964,
+  "url": "https://example.com/photos/1"
+}```
+
+- Get All Photos
+Endpoint:
+```
+GET /api/photos```
+Retrieves a list of all uploaded photos.
+
+Response:
+```
+[
+  {
+    "id": 1,
+    "title": "Photo Title",
+    "description": "Photo Description",
+    "latitude": 41.9028,
+    "longitude": 12.4964,
+    "url": "https://example.com/photos/1"
+  },
+  {
+    "id": 2,
+    "title": "Another Photo",
+    "description": "Another Description",
+    "latitude": 40.7128,
+    "longitude": -74.006,
+    "url": "https://example.com/photos/2"
+  }
+]```
+
+- Get Photo by ID
+Endpoint:
+```
+GET /api/photos/:id```
+Retrieves a single photo by its ID parameter.
+
+Response:
+```{
+  "id": 1,
+  "title": "Photo Title",
+  "description": "Photo Description",
+  "latitude": 41.9028,
+  "longitude": 12.4964,
+  "url": "https://example.com/photos/1"
+}```
+
+I assume that users will provide valid latitude and longitude coordinates when uploading photos.
 
 ## Folder Structure
 
