@@ -16,6 +16,22 @@ function Register({ onSuccess }) {
     setNewUser({ ...newUser, [name]: value });
   };
 
+  const alertDiv = document.createElement("div");
+  alertDiv.classList.add("custom-alert");
+  alertDiv.innerHTML = `<p>Welcome to SNAPIFY</p>`;
+  alertDiv.style.position = "fixed";
+  alertDiv.style.top = "50%";
+  alertDiv.style.left = "50%";
+  alertDiv.style.transform = "translateX(-50%)";
+  alertDiv.style.backgroundColor = "#dcdcdc";
+  alertDiv.style.padding = "1%";
+  alertDiv.style.fontSize = '1.5rem';
+  alertDiv.style.fontWeight = '600';
+  alertDiv.style.border = "1px solid #8c9d88";
+  alertDiv.style.borderRadius = "8px";
+  alertDiv.style.zIndex = "1000"; 
+
+
   const register = async () => {
     try {
       // Send new user info to server
@@ -29,8 +45,11 @@ function Register({ onSuccess }) {
       let results = await fetch("/api/register", options);
       if (results.ok) {
         onSuccess();
-        // Redirect user to home page
-        navigate("/home");
+        document.body.appendChild(alertDiv);
+        setTimeout(() => {
+          document.body.removeChild(alertDiv);
+          navigate("/home"); // Navigate after alert is shown and removed
+        }, 1500);
       } else {
         let error = await results.json(); // Get the error message from the server
         if (error.code === "ER_DUP_ENTRY") {
@@ -70,9 +89,6 @@ function Register({ onSuccess }) {
       <button className="home-button" onClick={register}>
         Register
       </button>
-      <p>
-        Have an account? <button>Log in</button>
-      </p>
       {error && <div className="text-danger">{error}</div>}
     </div>
   );

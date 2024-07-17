@@ -17,6 +17,7 @@ const con = mysql.createConnection({
   multipleStatements: true // Allow execution of multiple SQL statements
 });
 
+
 // Connect to MySQL database
 con.connect(function(err) {
   if (err) throw err; // Throw error if connection fails

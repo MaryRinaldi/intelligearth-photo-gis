@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": false,
   "scripts": {
-    "render-postbuild": "npm install --prefix frontend --production=false && cd /opt/render/project/src/frontend && npm run build",
+    "render-postbuild": "npm install --prefix client --production=false && cd /opt/render/project/src/client && npm run build",
     "start": "nodemon ./bin/www",
     "migrate": "node model/database.js",
     "test": "jest --config=jest.config.cjs",

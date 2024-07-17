@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+const removeToken = () => {
+  localStorage.removeItem("token");
+};
+
 function UserComponent () {
   const [privateData, setPrivateData] = useState(null);
   const navigate = useNavigate();
@@ -26,6 +30,8 @@ function UserComponent () {
         let data = await results.json();
         //store response private data
         setPrivateData(data);
+      } else if  (results.status === 401) {
+        setTokenExpired(true);
       }
     } catch (error) {
       console.log(error);
@@ -34,10 +40,11 @@ function UserComponent () {
 
   const logout = () => {
     //remove token from local storage
-    localStorage.removeItem("token");
-    //navigate to login page
+   removeToken();
+    //navigate to login
     navigate("/");
   };
+
 
   return { privateData, logout };
 };

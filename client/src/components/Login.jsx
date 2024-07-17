@@ -17,6 +17,22 @@ function Login({ onSuccess }) {
     setCredentials({ ...credentials, [name]: value });
   };
 
+  const alertDiv = document.createElement("div");
+  alertDiv.classList.add("custom-alert");
+  alertDiv.innerHTML = `<p>Welcome back to SNAPIFY</p>`;
+  alertDiv.style.position = "fixed";
+  alertDiv.style.top = "50%";
+  alertDiv.style.left = "50%";
+  alertDiv.style.transform = "translateX(-50%)";
+  alertDiv.style.backgroundColor = "#dcdcdc";
+  alertDiv.style.padding = "1%";
+  alertDiv.style.fontSize = '1.5rem';
+  alertDiv.style.fontWeight = '600';
+  alertDiv.style.border = "1px solid #8c9d88";
+  alertDiv.style.borderRadius = "8px";
+  alertDiv.style.zIndex = "1000"; 
+
+
   const login = async () => {
     try {
       // Simulated API call to the server
@@ -28,13 +44,12 @@ function Login({ onSuccess }) {
         body: JSON.stringify(credentials),
       });
       if (response.ok) {
-        // Simulated response from server
-        const data = await response.json();
-        // Store token in localStorage
-        localStorage.setItem("token", data.token);
-        // Redirect user to home
-        onSuccess();
-        navigate("/home");
+        document.body.appendChild(alertDiv); 
+       onSuccess();
+        setTimeout(() => {
+          document.body.removeChild(alertDiv);
+          navigate("/home"); // Navigate after alert is shown and removed
+        }, 1500);
       } else {
         setError("Invalid username or password");
         // Send recovery password email
@@ -75,37 +90,9 @@ function Login({ onSuccess }) {
       <button className="home-button" onClick={login}>
         Log in
       </button>
-      <p>
-        Don't have an account? <button>Register</button>
-      </p>
+      
       <div>
         {error && <div className="text-danger">{error}</div>}
-        {forgotPasswordClicked ? (
-          <>
-            <p>
-              Forgot your password? Check your email for instructions.
-            </p>
-            <input
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
-              type="password"
-              placeholder="Enter new password"
-            />
-            <button
-              className="home-button"
-              onClick={handleSetNewPassword}
-            >
-              Set New Password
-            </button>
-          </>
-        ) : (
-          <button
-            className="home-button"
-            onClick={handleForgotPasswordClick}
-          >
-            Forgot Password
-          </button>
-        )}
       </div>
     </div>
   );

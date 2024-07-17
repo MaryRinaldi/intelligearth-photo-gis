@@ -8,6 +8,7 @@ function FrontPage({ photos, mockPhotos }) {
   const [showRegister, setShowRegister] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const token = localStorage.getItem("token");
+  console.log("Token retrieved:", token);
 
   const handleShowRegister = () => {
     setShowRegister(true);
@@ -27,18 +28,9 @@ function FrontPage({ photos, mockPhotos }) {
 return (
 <>
 <div className="Homepage">
-{!token && (
-      <div className='register_form'>
-      <h3> Sign Up for access.</h3>  
-      <ul> 
-          <li><button onClick={handleShowRegister}>Register</button></li>
-          <li><button onClick={handleShowLogin}>Login</button></li>
-          </ul>
-      </div>
-    )}
        {showRegister && <Register onSuccess={handleSuccess} />}
         {showLogin && <Login onSuccess={handleSuccess} />}
-        <Link className='home_link' to="/" onClick={(e) => {
+        <Link className='home_link' to="/home" onClick={(e) => {
           if (!localStorage.getItem("token")) {
             e.preventDefault();
             const alertDiv = document.createElement('div');
@@ -49,9 +41,19 @@ return (
             document.body.appendChild(alertDiv);
             setTimeout(() => {
               document.body.removeChild(alertDiv);
+              console.log('token:', localStorage)
             }, 3000);
           }
-        }}>Go to SNAPIFY</Link>
+        }}>Welcome to SNAPIFY</Link>
+{!token && (
+      <div className='register_form'>
+      <h3> Sign Up for access.</h3>  
+      <ul> 
+          <li><button className='frontButton' onClick={handleShowRegister}>Register</button></li>
+          <li><button className='frontButton' onClick={handleShowLogin}>Login</button></li>
+          </ul>
+      </div>
+    )}
       </div>
       <Outlet />
     </>

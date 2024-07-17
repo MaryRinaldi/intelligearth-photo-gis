@@ -118,6 +118,7 @@ intelligearth-photo-gis/
 │ ├── dist/
 │ ├── node_modules/ (ignored by git)
 │ ├── src/
+│ │ ├── tests/
 │ │ ├── assets/
 │ │ ├── components/
 │ │ ├── views/
@@ -150,21 +151,34 @@ intelligearth-photo-gis/
 
 ### Backend Setup
 
-* Navigate to the backend/ directory:
-cd backend/
+* Navigate to the root directory: photo-upload-gis/
 * Install dependencies:
 npm install
 * Start the backend server:
 npm start
+* Restart the backend/db if necessary:
+npm run migrate
 
 ### Frontend Setup
 
-* Navigate to the photo-upload-gis/ directory:
+* Navigate to the client/ directory:
 cd client
 * Install dependencies:
 npm install
 * Start the frontend development server:
 npm run dev
+* Build the app:
+npm run build
+
+### Database Setup
+
+* Open MySql locally, insert your credentials;
+* Input command :
+CREATE DATABASE photo_gis;
+* Select the new db :
+USE photo_gis;
+* Show if tables were created:
+SHOW TABLES;
 
 ## API Report
 
@@ -190,7 +204,7 @@ Thank you ***
 2. Access Render.com Dashboard:
   Access your dashboard on Render.com and click on "New", then select "Static Site".
 3. Connect Your Repository:
-    Choose the Git provider that hosts the repository of your React Vite applications, or enter the link to a public repository. In our case, we connected our Static Site to the NoteKeeper repository.
+    Choose the Git provider that hosts the repository of your React Vite applications, or enter the link to a public repository. In our case, we connected our Static Site to the main repository.
 4. Configure Project Details:
   Specify the project name, the repository branch, and other necessary information.
 5. Build Commands:

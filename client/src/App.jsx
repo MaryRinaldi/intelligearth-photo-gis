@@ -62,7 +62,7 @@ function App() {
         <Route path="/home" element={<HomePage mockPhotos={mockPhotos} photos={[...mockPhotos, ...uploadedPhotos]} uploadedPhotos={uploadedPhotos} lastUploadedUrl={lastUploadedUrl} />} />
         <Route path="/gallery" element={<PhotoGrid photos={uploadedPhotos} />} />
         <Route path="/map" element={<MapComponent photos={uploadedPhotos} lastUploadedUrl={lastUploadedUrl} setLastUploadedUrl={setLastUploadedUrl} />} />
-        <Route path="/profile" element={ <ProfilePage/>} />
+        <Route path="/profile" element={ <ProfilePage photos={uploadedPhotos} />} />
         <Route path='/photoupload' element={<PhotoUploadForm onPhotoUpload={handlePhotoUpload} />} />
       </Routes>
 

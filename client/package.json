@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "render-postbuild": "npm install --prefix frontend --production=false && cd /opt/render/project/src/frontend && npm run build",
+    "render-postbuild": "npm install --prefix client --production=false && cd /opt/render/project/src/client && npm run build",
     "start": "react-scripts start",
     "dev": "vite",
     "build": "vite build",

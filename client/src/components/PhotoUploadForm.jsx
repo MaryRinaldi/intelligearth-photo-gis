@@ -127,9 +127,8 @@ const PhotoUploadForm = ({ onPhotoUpload, setUploadedImageUrl }) => {
         <label htmlFor="longitude">Longitude:</label>
         <input type="text" id="longitude" value={longitude} onChange={(e) => setLongitude(e.target.value)} />
         <label htmlFor="url">Insert your URL here:</label>
-        {/* <input type="text" id="url" value={url} onChange={(e) => setUrl(e.target.value)} /> */}
-        {/* File input field */}
-        <input type="file" onChange={handleFileChange} multiple />
+        <input type="text" id="url" value={url} onChange={(e) => setUrl(e.target.value)} />
+        {/* <input type="file" onChange={handleFileChange} multiple /> */}
         {/* Submit button */}
         <button type="submit" className="upload-button">Upload</button>
       </form>

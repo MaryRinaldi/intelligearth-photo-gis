@@ -55,7 +55,7 @@ Desideri visualizzare tutte le tue foto in un colpo d'occhio? Basta un clic su "
 <br></br>
 Stai cercando quella foto specifica del barbecue del 2010? Inserisci il titolo della foto nella barra di ricerca situata nella galleria e la troverai in un attimo.
 <br></br>
-Esplora la sezione "Profile" per scoprire i luoghi che hai visitato e dove hai localizzato le tue foto.
+Esplora la sezione "Profile" per scoprire i luoghi che hai visitato, dove hai localizzato le tue foto.
 <br></br>
 Presto sarà disponibile anche la funzione per  caricare direttamente l'immagine da file, anziché inserire un URL. Voglio un'app che gestisca tutto senza problemi: perché, diciamocelo, il Wi-Fi può essere complicato a volte.
 <br></br>
@@ -68,7 +68,8 @@ Spero che ti aiuti a rivivere i tuoi momenti speciali e a non perdere mai più u
       </div>
        <p>Prova questa mappa con i click! Visualizzerai le foto inserite nella gallery. Se invece vuoi vedere le tue foto, caricate tramite l'apposita sezione sulla mappa, vai sul Menu/Map. Lì troverai una mappa più grande.</p>
       <MapComponent photos={[...uploadedPhotos, ...mockPhotos]} lastUploadedUrl={lastUploadedUrl} setLastUploadedUrl={setLastUploadedUrl} />
-      <p>Queste sono le mie foto-esempio. Vai su Menu/Gallery per vedere le tue!</p>
+      <p>Queste sono le mie foto-esempio. Scorri per vedere la preview della tua ultifa foto caricata. <br></br>
+      Vai su menu/Gallery per vedere tutte le altre tue foto!</p>
       <div className="photo-grid">  
       {[...uploadedPhotos, ...mockPhotos].map((photo) => (
         <div key={photo.id} className="photo-item">

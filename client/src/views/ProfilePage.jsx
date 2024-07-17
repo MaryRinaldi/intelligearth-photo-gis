@@ -1,16 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Routes, Route, Link, Outlet } from "react-router-dom";
-import UserComponent from '../components/UserComponent';
+import { Link, useNavigate } from "react-router-dom";
 import '../App.css'
 import logo from "../assets/Logo.png";
-import standin from "../assets/Social-Media-People-Doodles.jpg";
 
-
-
-function ProfilePage() {
+function ProfilePage({ photos }) {
     const [user, setUser] = useState(null);
-    const { privateData } = UserComponent();
-
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetch('/api')
@@ -19,37 +14,50 @@ function ProfilePage() {
                     throw new Error('Failed to fetch user data');
                 }
                 return response.json();
-        })
+            })
             .then(userData => {
-            setUser(userData);
+                setUser(userData);
             })
             .catch(error => {
-                setError(error.message); // Set error state if fetch fails
                 console.error('Error fetching user data:', error);
+            navigate("/");    
             });
-}, []);
+    }, [navigate]);
 
-    if (!user) {
-        return <div>Loading...</div>;
-    }
+    
+    const userLocations = photos.map(photo => ({
+        latitude: photo.latitude,
+        longitude: photo.longitude
+    }));
 
     return (
         <div>
-            <div className="logocontainer"><img className="logoimage" src={logo} alt="Logo"/></div>
-            <div className="userprofiletitle">User Profile</div>
-            <div className="profilepic"><strong> Profile Picture</strong></div> 
-            <div>    <img src={standin} alt="profilepicstandin" style={{ width: '100px', height: '100px', marginLeft: '81%' }} /></div>
-            <div style={{ width: '20px', height: '20px',  }}></div>
-            <div className="usernameemailtext">
-                <strong>Username:</strong> {user.userName}
+            <div className="logocontainer">
+                <img className="logoimage" src={logo} alt="Logo"/>
             </div>
-
+            <div className="userprofiletitle">User Profile</div>
             <div className="usernameemailtext">
-                <strong>Email:</strong> {user.userEmail}
+                <strong>Username:</strong> {user?.userName}
+                <strong>Email:</strong> {user?.userEmail}
+            </div>
+            <div className="usernameemailtext">
+            <h3>Informazioni sui Luoghi Visitati</h3>
+                {userLocations.length > 0 ? (
+                    userLocations.map((location, index) => (
+                    <div key={index}>
+                        <div>Lat: {location.latitude},
+                        Lng: {location.longitude}</div>
+                    </div>
+                ))
+            ) : (
+                <p>No locations found.</p>
+            )}
+            </div>
+            <div className="usernameemailtext">
+                
             </div>
         </div>
-
-  );
+    );
 }
 
 export default ProfilePage;
