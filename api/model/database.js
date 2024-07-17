@@ -10,8 +10,8 @@ const DB_NAME = process.env.DB_NAME;
 
 // Create MySQL connection object with provided or default values
 const con = mysql.createConnection({
-  host: DB_HOST || "127.0.0.1",
-  user: DB_USER || "root",
+  host: DB_HOST,
+  user: DB_USER,
   password: DB_PASS,
   database: DB_NAME,
   multipleStatements: true // Allow execution of multiple SQL statements
