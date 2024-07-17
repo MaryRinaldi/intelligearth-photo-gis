@@ -56,7 +56,7 @@ Response:
 }
 ```
 
-* Get All Photos
+* Get All Photos.
 Endpoint:
 
 ```GET /api/photos```
@@ -86,12 +86,12 @@ Response:
 ]
 ```
 
-* Get Photo by ID
+* Get Photo by ID.
 Endpoint:
 
 ```GET /api/photos/:id```
 
-Retrieves a single photo by its ID parameter.
+* Retrieves a single photo by its ID parameter.
 
 Response:
 
@@ -123,6 +123,7 @@ intelligearth-photo-gis/
 │ │ ├── views/
 │ │ ├── App.css
 │ │ ├── App.jsx
+│ │ ├── Media-related.css
 │ │ ├── index.css
 │ │ ├── main.jsx
 │ ├── .env (ignored by git)
@@ -165,9 +166,9 @@ npm install
 * Start the frontend development server:
 npm run dev
 
-## API Documentation
+## API Report
 
-* POST /api/photos/upload: Upload a photo with metadata (title, description, location).
+* POST /api/photos: Upload a photo with metadata (title, description, location).
 * GET /api/photos: Fetch all uploaded photos.
 * GET /api/photos/ : Fetch a single photo by ID.
 
@@ -180,4 +181,4 @@ npm run dev
 ### Contributing
 
 Feel free to contribute to this project by forking it and submitting a pull request. For major changes, please open an issue first to discuss what you would like to change.
-Thank you *
+Thank you ***
