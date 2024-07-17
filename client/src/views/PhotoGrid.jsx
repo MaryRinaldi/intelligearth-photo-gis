@@ -42,7 +42,7 @@ function PhotoGrid() {
       </form>
       <h3 style={{ textAlign: 'center' }}>Visualizza qui le tue foto caricate</h3>
       <div className="photo-gallery">
-        {filteredPhotos.map((photo) => (
+        {filteredPhotos.slice().reverse().map((photo) => (
           <div key={photo.id} className="photo-item" onClick={() => handlePhotoClick(photo)}>
             <img src={photo.url} alt={photo.title} />
             <div>
@@ -54,7 +54,6 @@ function PhotoGrid() {
         ))}
       </div>
 
-      {/* Visualizza i dettagli della foto selezionata */}
       {selectedPhoto && (
         <div className="photo-details">
           <h2>{selectedPhoto.title}</h2>
