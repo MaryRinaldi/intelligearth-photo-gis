@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route } from "react-router-dom";
-import Header from './views/Header'; // Importing header component
-import MapComponent from './components/MapComponent'; // Importing map component
-import PhotoGrid from './views/PhotoGrid'; // Importing photo grid view
-import PhotoUploadForm from './components/PhotoUploadForm'; // Importing photo upload form component
-import FrontPage from './views/FrontPage'; // Importing front page view
-import './App.css'; // Importing main CSS styles
-import './Media-related.css'; // Importing media-related CSS styles
+import Header from './views/Header'; 
+import MapComponent from './components/MapComponent'; 
+import PhotoGrid from './views/PhotoGrid'; 
+import PhotoUploadForm from './components/PhotoUploadForm'; 
+import FrontPage from './views/HomePage'; 
+import ProfilePage from './views/ProfilePage';
+import HomePage from './views/FrontPage';
+import './App.css'; 
+import './Media-related.css'; 
 
 const mockPhotos = [
   {
@@ -56,10 +58,11 @@ function App() {
       <Header /> 
       <Routes>
         {/* Routes for different views */}
-        <Route path="/" element={<FrontPage mockPhotos={mockPhotos} photos={[...mockPhotos, ...uploadedPhotos]} uploadedPhotos={uploadedPhotos} lastUploadedUrl={lastUploadedUrl} />} />
+        <Route path='/' element={FrontPage} />
+        <Route path="/home" element={<HomePage mockPhotos={mockPhotos} photos={[...mockPhotos, ...uploadedPhotos]} uploadedPhotos={uploadedPhotos} lastUploadedUrl={lastUploadedUrl} />} />
         <Route path="/gallery" element={<PhotoGrid photos={uploadedPhotos} />} />
         <Route path="/map" element={<MapComponent photos={uploadedPhotos} lastUploadedUrl={lastUploadedUrl} setLastUploadedUrl={setLastUploadedUrl} />} />
-        {/* <Route path="/profilepage" element={ <ProfilePage/>} /> */}
+        <Route path="/profile" element={ <ProfilePage/>} />
         <Route path='/photoupload' element={<PhotoUploadForm onPhotoUpload={handlePhotoUpload} />} />
       </Routes>
 

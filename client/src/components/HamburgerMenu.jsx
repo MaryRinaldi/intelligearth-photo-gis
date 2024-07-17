@@ -20,7 +20,7 @@ const Hamburger = () => {
       </button>
       {isOpen && (
         <div className="menu-links">
-          <Link to="/" className="nav-link" onClick={closeMenu}>Home</Link>
+          <Link to="/home" className="nav-link" onClick={closeMenu}>Home</Link>
           <Link to="/map" className="nav-link" onClick={closeMenu}>Map</Link>
           <Link to="/gallery" className="nav-link" onClick={closeMenu}>Gallery</Link>
           <Link to="/profile" className="nav-link" onClick={closeMenu}>Profile</Link>
