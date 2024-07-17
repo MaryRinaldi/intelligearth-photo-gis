@@ -1,7 +1,7 @@
 module.exports = {
     verbose: true,
     roots: [
-      "<rootDir>/src"
+      "<rootDir>/client/src"
     ],
     testMatch: [
       "**/__tests__/**/*.js?(x)",

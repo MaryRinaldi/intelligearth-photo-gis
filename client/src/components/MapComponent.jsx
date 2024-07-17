@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import mapboxgl from 'mapbox-gl';
 
@@ -8,6 +8,7 @@ function MapComponent({ photos, lastUploadedUrl, setLastUploadedUrl }) {
   const mapContainerRef = useRef(null);
   const mapRef = useRef(null);
   const location = useLocation();
+  const [mapKey, setMapKey] = useState(0); 
 
   useEffect(() => {
     if (!mapRef.current) {
@@ -54,7 +55,7 @@ function MapComponent({ photos, lastUploadedUrl, setLastUploadedUrl }) {
 
     const markerEl = document.createElement('div');
     markerEl.className = 'marker';
-    markerEl.style.backgroundImage = `url(${lastUploadedUrl || 'https://media.istockphoto.com/id/1397597374/it/foto/roma-al-tramonto.webp?b=1&s=170667a&w=0&k=20&c=jy49eiUjC0g_Px-4w96xz-R_0Hh5-841EAR1_LkUnL0='})`;
+    markerEl.style.backgroundImage = `url(${lastUploadedUrl || 'https://media.istockphoto.com/id/1397597374/it/foto/roma-al-q33VgYjFvp8I4EOmu592oR7YnrFdPrXPlOhCZ5FqJ4k='})`;
     markerEl.style.width = '150px';
     markerEl.style.height = '150px';
     markerEl.style.backgroundSize = 'cover';
@@ -82,7 +83,10 @@ function MapComponent({ photos, lastUploadedUrl, setLastUploadedUrl }) {
       body: JSON.stringify(photoData)
     })
     .then(response => response.json())
-    .then(data => console.log('Success:', data))
+    .then(data => {
+      console.log('Success:', data);
+    setMapKey(prevKey => prevKey +1); /* force map re-render to show pics */
+  })
     .catch((error) => console.error('Error:', error));
 
     if (mapRef.current) {
@@ -123,7 +127,8 @@ function MapComponent({ photos, lastUploadedUrl, setLastUploadedUrl }) {
 
   return (
     <>
-    <div className="map-component">{location.pathname === '/map' && (
+    <div className="map-component">
+      {location.pathname === '/map' && (
         <p>  Aggiorna la mappa se ancora non visualizzi le tue foto.</p>
       )}
       <div ref={mapContainerRef} id="map" style={{ width: '100%', height: '400px' }}></div>
