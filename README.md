@@ -33,14 +33,15 @@ Uploads a photo along with metadata (title, description, location coordinates).
 
 Request Body:
 
-```{
+```
+{
   "title": "Photo Title",
   "description": "Photo Description",
   "latitude": 41.9028,
   "longitude": 12.4964,
   "file": "Base64 encoded image data"
-}```
-
+}
+```
 
 Response:
 
