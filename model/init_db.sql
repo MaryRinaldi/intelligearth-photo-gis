@@ -1,6 +1,6 @@
 -- Drop Tables
 SET foreign_key_checks = 0;
-DROP TABLE if exists users
+DROP TABLE if EXISTS users;
 DROP TABLE IF EXISTS pic_table;
 SET foreign_key_checks = 1;
 

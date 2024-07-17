@@ -1,11 +1,28 @@
-import React, {useState, useEffect} from 'react'
-import { Routes, Route, Link, Outlet } from "react-router-dom";
+import React, {useState} from 'react'
+import { Outlet, Link } from "react-router-dom";
+import Register from '../components/Register';
+import Login from '../components/Login';
 import '../App.css'
 
-function FrontPage() {
-
+function FrontPage({ photos, mockPhotos }) {
+  const [showRegister, setShowRegister] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
   const token = localStorage.getItem("token");
 
+  const handleShowRegister = () => {
+    setShowRegister(true);
+    setShowLogin(false);
+  };
+
+  const handleShowLogin = () => {
+    setShowLogin(true);
+    setShowRegister(false);
+  };
+
+  const handleSuccess = () => {
+    setShowRegister(false);
+    setShowLogin(false);
+  };
 
 return (
 <>
@@ -14,30 +31,31 @@ return (
       <div className='register_form'>
       <h3> Sign Up for access.</h3>  
       <ul> 
-          <li><button >Register</button></li>
-          <li><button >Login</button></li>
+          <li><button onClick={handleShowRegister}>Register</button></li>
+          <li><button onClick={handleShowLogin}>Login</button></li>
           </ul>
       </div>
     )}
-       <Link className='home_link' to="/" onClick={(e) => {
-        if (!localStorage.getItem("token")) {
-          e.preventDefault();
-              // Customized alert
-              const alertDiv = document.createElement('div');
-              alertDiv.classList.add('custom-alert');
-              alertDiv.innerHTML = `
-                <p>Welcome back! Please login to access the homepage.</p>
-              `;
-              document.body.appendChild(alertDiv);
-              // Remove the alert after 3 seconds
-              setTimeout(() => {
-                document.body.removeChild(alertDiv);
-              }, 3000);
-            }
-          }}>Go to SNAPIFY</Link>
+       {showRegister && <Register onSuccess={handleSuccess} />}
+        {showLogin && <Login onSuccess={handleSuccess} />}
+        <Link className='home_link' to="/" onClick={(e) => {
+          if (!localStorage.getItem("token")) {
+            e.preventDefault();
+            const alertDiv = document.createElement('div');
+            alertDiv.classList.add('custom-alert');
+            alertDiv.innerHTML = `
+              <p>Welcome back! Please login to access the homepage.</p>
+            `;
+            document.body.appendChild(alertDiv);
+            setTimeout(() => {
+              document.body.removeChild(alertDiv);
+            }, 3000);
+          }
+        }}>Go to SNAPIFY</Link>
       </div>
-      <Outlet />      
+      <Outlet />
     </>
-  );
+);
 }
-export default FrontPage
+
+export default FrontPage;

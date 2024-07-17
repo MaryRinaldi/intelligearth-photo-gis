@@ -4,9 +4,9 @@ import Header from './views/Header';
 import MapComponent from './components/MapComponent'; 
 import PhotoGrid from './views/PhotoGrid'; 
 import PhotoUploadForm from './components/PhotoUploadForm'; 
-import FrontPage from './views/HomePage'; 
+import FrontPage from './views/FrontPage';
 import ProfilePage from './views/ProfilePage';
-import HomePage from './views/FrontPage';
+import HomePage from './views/HomePage';
 import './App.css'; 
 import './Media-related.css'; 
 
@@ -58,7 +58,7 @@ function App() {
       <Header /> 
       <Routes>
         {/* Routes for different views */}
-        <Route path='/' element={FrontPage} />
+        <Route path='/' element={<FrontPage mockPhotos={mockPhotos} />} />
         <Route path="/home" element={<HomePage mockPhotos={mockPhotos} photos={[...mockPhotos, ...uploadedPhotos]} uploadedPhotos={uploadedPhotos} lastUploadedUrl={lastUploadedUrl} />} />
         <Route path="/gallery" element={<PhotoGrid photos={uploadedPhotos} />} />
         <Route path="/map" element={<MapComponent photos={uploadedPhotos} lastUploadedUrl={lastUploadedUrl} setLastUploadedUrl={setLastUploadedUrl} />} />

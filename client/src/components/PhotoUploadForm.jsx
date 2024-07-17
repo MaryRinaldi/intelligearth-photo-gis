@@ -9,7 +9,7 @@ const PhotoUploadForm = ({ onPhotoUpload, setUploadedImageUrl }) => {
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState(''); 
   const [url, setUrl] = useState(''); 
-  const [selectedFiles, setSelectedFiles] = useState([]); s
+  const [selectedFiles, setSelectedFiles] = useState([]);
 
   // Handler for file selection
   const handleFileChange = (e) => {
@@ -127,7 +127,7 @@ const PhotoUploadForm = ({ onPhotoUpload, setUploadedImageUrl }) => {
         <label htmlFor="longitude">Longitude:</label>
         <input type="text" id="longitude" value={longitude} onChange={(e) => setLongitude(e.target.value)} />
         <label htmlFor="url">Insert your URL here:</label>
-        <input type="text" id="url" value={url} onChange={(e) => setUrl(e.target.value)} />
+        {/* <input type="text" id="url" value={url} onChange={(e) => setUrl(e.target.value)} /> */}
         {/* File input field */}
         <input type="file" onChange={handleFileChange} multiple />
         {/* Submit button */}

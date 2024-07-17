@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../App.css";
 
-function Register({ goToLogin }) {
+function Register({ onSuccess }) {
   const [newUser, setNewUser] = useState({
     userName: "",
     userEmail: "",
@@ -28,8 +28,9 @@ function Register({ goToLogin }) {
       };
       let results = await fetch("/api/register", options);
       if (results.ok) {
-        // Redirect user to login page
-        navigate("/");
+        onSuccess();
+        // Redirect user to home page
+        navigate("/home");
       } else {
         let error = await results.json(); // Get the error message from the server
         if (error.code === "ER_DUP_ENTRY") {
@@ -70,7 +71,7 @@ function Register({ goToLogin }) {
         Register
       </button>
       <p>
-        Have an account? <button onClick={goToLogin}>Log in</button>
+        Have an account? <button>Log in</button>
       </p>
       {error && <div className="text-danger">{error}</div>}
     </div>

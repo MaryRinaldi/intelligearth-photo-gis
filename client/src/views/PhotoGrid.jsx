@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-function PhotoGrid() {
+function PhotoGrid({mockPhotos}) {
   const [galleryPhotos, setGalleryPhotos] = useState([]);
   const [selectedPhoto, setSelectedPhoto] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');

@@ -22,6 +22,93 @@ body::-webkit-scrollbar {
   --color-background-light: #dcdcdc;
   }
 
+/* Homepage container */
+.Homepage {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  text-align: center;
+  align-self: center;
+}
+
+/* Register and Login form container */
+.register_form {
+  margin-bottom: 20px;
+}
+
+/* Headings */
+h3 {
+  margin-bottom: 15px;
+  color: var(--color-primary);
+}
+
+/* Unordered list styling */
+ul {
+  list-style: none;
+}
+
+/* List items */
+li {
+  margin-bottom: 10px;
+}
+
+/* Buttons */
+button {
+  background-color: var(--color-secondary);
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Link styling */
+.home_link {
+  display: inline-block;
+  margin-top: 20px;
+  color: var(--color-tertiary);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.home_link:hover {
+  text-decoration: underline;
+}
+
+/* Custom alert styling */
+.custom-alert {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #ffdddd;
+  color: #d8000c;
+  border: 1px solid #d8000c;
+  padding: 10px;
+  border-radius: 5px;
+  z-index: 1000;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Show and hide animations for the alert */
+@keyframes fadeInOut {
+  0% { opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.custom-alert {
+  animation: fadeInOut 3s forwards;
+}
+
 
 .Frontpage {
   margin-left: 320px; 

@@ -29,18 +29,18 @@ function executeQuery(query, values = []) {
 
         connection.query(query, values, (err, result) => {
           if (err) {
-            connection.rollback(() => {
+            return connection.rollback(() => {
               connection.release();
-              console.error('Error rolling back transaction:', err); // Log transaction rollback error
+              console.error('Error executing query, rolling back transaction:', err); // Log transaction rollback error
               return reject(err); // Reject promise with error
             });
           }
 
           connection.commit(err => {
             if (err) {
-              connection.rollback(() => {
+              return connection.rollback(() => {
                 connection.release();
-                console.error('Error committing transaction:', err); // Log transaction commit error
+                console.error('Error committing transaction, rolling back:', err); // Log transaction commit error
                 return reject(err); // Reject promise with error
               });
             }

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../App.css";
 
-function Login({ goToRegister }) {
+function Login({ onSuccess }) {
   const [credentials, setCredentials] = useState({
     userName: "",
     userPassword: "",
@@ -32,7 +32,8 @@ function Login({ goToRegister }) {
         const data = await response.json();
         // Store token in localStorage
         localStorage.setItem("token", data.token);
-        // Redirect user to Dashboard
+        // Redirect user to home
+        onSuccess();
         navigate("/home");
       } else {
         setError("Invalid username or password");
@@ -75,7 +76,7 @@ function Login({ goToRegister }) {
         Log in
       </button>
       <p>
-        Don't have an account? <button onClick={goToRegister}>Register</button>
+        Don't have an account? <button>Register</button>
       </p>
       <div>
         {error && <div className="text-danger">{error}</div>}
