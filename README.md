@@ -172,7 +172,7 @@ npm run dev
 * GET /api/photos: Fetch all uploaded photos.
 * GET /api/photos/ : Fetch a single photo by ID.
 
-## Additional Features
+### Additional Future Features
 
 * User authentication
 * Image processing (resizing, watermarking)
