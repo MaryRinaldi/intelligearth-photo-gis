@@ -31,14 +31,14 @@ return (
       <div className='register_form'>
       <h3> Sign Up for access.</h3>  
       <ul> 
-          <li><button onClick={handleShowRegister}>Register</button></li>
-          <li><button onClick={handleShowLogin}>Login</button></li>
+          <li><button className='frontButton' onClick={handleShowRegister}>Register</button></li>
+          <li><button className='frontButton' onClick={handleShowLogin}>Login</button></li>
           </ul>
       </div>
     )}
        {showRegister && <Register onSuccess={handleSuccess} />}
         {showLogin && <Login onSuccess={handleSuccess} />}
-        <Link className='home_link' to="/" onClick={(e) => {
+        <Link className='home_link' to="/home" onClick={(e) => {
           if (!localStorage.getItem("token")) {
             e.preventDefault();
             const alertDiv = document.createElement('div');

@@ -55,7 +55,7 @@ li {
 }
 
 /* Buttons */
-button {
+.frontButton {
   background-color: var(--color-secondary);
   color: #fff;
   border: none;
@@ -65,7 +65,7 @@ button {
   transition: background-color 0.3s ease;
 }
 
-button:hover {
+.frontButton:hover {
   background-color: #0056b3;
 }
 
