@@ -30,6 +30,7 @@ return (
 <div className="Homepage">
        {showRegister && <Register onSuccess={handleSuccess} />}
         {showLogin && <Login onSuccess={handleSuccess} />}
+
         <Link className='home_link' to="/home" onClick={(e) => {
           if (!localStorage.getItem("token")) {
             e.preventDefault();
