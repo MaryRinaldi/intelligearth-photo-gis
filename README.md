@@ -176,9 +176,37 @@ npm run dev
 
 * User authentication
 * Image processing (resizing, watermarking)
-* Unit tests for key components
+* Unit tests for key components to work properly
 
 ### Contributing
 
 Feel free to contribute to this project by forking it and submitting a pull request. For major changes, please open an issue first to discuss what you would like to change.
 Thank you ***
+
+## Deploying React Vite Applications on Render.com
+
+1. Setup Your Repository:
+  After creating your React applications using Vite, ensure you have a repository on GitHub or GitLab where the code for your applications resides.
+2. Access Render.com Dashboard:
+  Access your dashboard on Render.com and click on "New", then select "Static Site".
+3. Connect Your Repository:
+    Choose the Git provider that hosts the repository of your React Vite applications, or enter the link to a public repository. In our case, we connected our Static Site to the NoteKeeper repository.
+4. Configure Project Details:
+  Specify the project name, the repository branch, and other necessary information.
+5. Build Commands:
+  In the "Build Commands" section, enter the following commands:
+    npm install; npm run build
+6. Publish Directory:
+    In the "Publish Directory" section, specify the folder containing the static assets of the built applications. For React Vite applications, set the Root Directory to dist.
+7. Customize Settings:
+    Customize additional settings as needed (environment variables, Auto-Deploy, etc.).
+8. Initiate Deployment:
+    Once satisfied with the configuration, click on "Create Static Site" to initiate the deployment process.
+9. Automatic Deployment:
+    Render.com will automatically handle the build and deployment of your React Vite applications, based on the specified commands and directory.
+10. Access Your Live Sites:
+    Upon successful deployment, your sites will be live, and Render.com will provide unique URLs to access them.
+11. View Your Applications:
+    View your live React Vite applications by navigating to the generated URLs in your web browsers.
+
+These instructions streamline the process of deploying React Vite applications on Render.com, facilitating a smooth transition from development to production. Happy deploying!
