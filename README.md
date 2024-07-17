@@ -27,8 +27,7 @@ I chose to use Mapbox for mapping due to its extensive features and customizatio
 * Upload a Photo
 Endpoint:
 
-```POST /api/photos/upload
-```
+```POST /api/photos/upload```
 
 Uploads a photo along with metadata (title, description, location coordinates).
 
