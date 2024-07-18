@@ -14,6 +14,7 @@ const con = mysql.createConnection({
   user: DB_USER,
   password: DB_PASS,
   database: DB_NAME,
+  port: '3306',
   multipleStatements: true // Allow execution of multiple SQL statements
 });
 
